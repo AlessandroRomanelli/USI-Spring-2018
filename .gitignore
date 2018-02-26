@@ -1,0 +1,9 @@
+**/.DS_Store
+Linear Algebra/*.pdf
+**/Assignment
+PF2
+**/*.aux
+**/*.fdb_latexmk
+**/*.fls
+**/*.log
+**/*.synctex.gz
