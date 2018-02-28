@@ -5,10 +5,10 @@ ITA: **Nuovo su GitHub e non sai dove sbattere la testa?** Allora leggi attentam
 
 ## ENGLISH
 #### What you will find here
-This is where you can find all the notes regarding the following courses from the Spring Semester 2018 at [USI](https://www.usi.ch):
-    -   Algorithms and Data Structures
-    -   Discrete Structures
-    -   Linear Algebra
+This is where you can find all the notes regarding the following courses from the Spring Semester 2018 at [USI](https://www.usi.ch): 
+-   Algorithms and Data Structures
+-   Discrete Structures
+-   Linear Algebra
 
 #### How to stay in the loop
 In order to keep this repository updated you should:
