@@ -42,9 +42,9 @@ You can use this not only to report problems with the notes but also questions, 
 ## ITALIANO
 #### Cosa troverai qui
 In questa repository troverai tutte le note delle seguenti classi per il semestre primaverile presso [USI](https://www.usi.ch):
-    -   Algorithms and Data Structures
-    -   Discrete Structures
-    -   Linear Algebra
+-   Algorithms and Data Structures
+-   Discrete Structures
+-   Linear Algebra
 
 #### Come restare aggiornati
 Se sapete già usare GitHub perché siete dei super geeks, gli step dovreste già conoscerli, ma in caso ve li foste scordati sono i seguenti:
