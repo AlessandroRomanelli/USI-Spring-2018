@@ -1,10 +1,9 @@
 # Welcome to my repository!
-****
 ENG: **Are you new to GitHub and don't know what to do?** Make sure you read through this!
+
 ITA: **Nuovo su GitHub e non sai dove sbattere la testa?** Allora leggi attentamente! (Testo in italiano a fondo descrizione)
 
 ## ENGLISH
-****
 #### What you will find here
 This is where you can find all the notes regarding the following courses from the Spring Semester 2018 at [USI](https://www.usi.ch):
     -   Algorithms and Data Structures
@@ -39,7 +38,6 @@ Have you noticed that something is missing? You won't be able to modify the repo
 You can use this not only to report problems with the notes but also questions, or perplexities that you have. Just like a forum!
 
 ## ITALIANO
-****
 #### Cosa troverai qui
 In questa repository troverai tutte le note delle seguenti classi per il semestre primaverile presso [USI](https://www.usi.ch):
     -   Algorithms and Data Structures
