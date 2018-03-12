@@ -1,23 +1,22 @@
-def merge_sorted(A, B):
-    i = j = 0
-    X = []
-    while i < len(A) and j < len(B):
-        if (i < len(A) and (j < len(B) or A[i] < B[j])):
-            X.append(A[i])
-            i += 1
+def msort(array):
+    if len(array) <= 1:
+        return array
+    half = len(array)//2
+    left = msort(array[:half])
+    right = msort(array[half:])
+    return merge(left, right)
+
+def merge(lharray, rharray):
+    merged = []
+    while len(lharray) != 0:
+        if (len(rharray) != 0):
+            if (lharray[0] > rharray[0]):
+                merged.append(rharray.pop(0))
+            else:
+                merged.append(lharray.pop(0))
         else:
-            X.append(B[j])
-            j +=1
-    return X
+            merged = merged + lharray
+            break
+    return merged + rharray
 
-def merge_sort(A):
-    if len(A) == 1:
-        return A
-    m = len(A)//2
-    left = merge_sort(A[:m])
-    right = merge_sort(A[m:])
-    return merge_sorted(left, right)
-
-A = [8,5,3,1,8,0,4,3,2,8,5,1]
-
-print(merge_sort(A))
+msort(gen_random_A(200,63))
