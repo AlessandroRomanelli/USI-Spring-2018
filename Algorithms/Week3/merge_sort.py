@@ -19,4 +19,4 @@ def merge(lharray, rharray):
             break
     return merged + rharray
 
-msort(gen_random_A(200,63))
+print(msort([9,8,7,6,5,4,3,2,1]))
