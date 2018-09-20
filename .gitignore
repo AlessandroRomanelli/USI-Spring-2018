@@ -8,3 +8,4 @@ PF2
 **/*.log
 **/*.synctex.gz
 SA2
+**/node_modules
