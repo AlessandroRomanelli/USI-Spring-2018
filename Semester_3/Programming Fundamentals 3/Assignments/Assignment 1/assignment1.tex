@@ -1,0 +1,326 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{amssymb}
+\usepackage{todonotes}
+\usepackage{mathtools}
+\usepackage{wasysym}
+\usepackage{cancel}
+\usepackage{listings}
+
+\usetikzlibrary{automata,positioning}
+
+%
+% Basic Document Settings
+%
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,	                   % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{orange!90!black},       % keyword style
+  language=Java,                 % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=1,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{yellow!60!orange!80!black},     % string literal style
+  tabsize=2,	                   % sets default tabsize to 2 spaces
+  title=\lstname,                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+  keywords=[3]{self},
+  keywordstyle=[3]{\color{orange!50!gray}},
+  keywords=[4]{__init__, __lt__},
+  keywordstyle=[4]{\color{orange!50!gray}},
+  moredelim=**[is][\color{orange!90!black}]{@}{@}
+}
+
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName}
+\chead{\hspace{2.5cm} \hmwkClass\ (\hmwkClassInstructor): \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\newcount\colveccount
+\newcommand*\colvec[1]{
+        \global\colveccount#1
+        \begin{pmatrix}
+        \colvecnext
+}
+\def\colvecnext#1{
+        #1
+        \global\advance\colveccount-1
+        \ifnum\colveccount>0
+                \\
+                \expandafter\colvecnext
+        \else
+                \end{pmatrix}
+        \fi
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+\newenvironment{homeworkProblem}[1][-1]{
+    \ifnum#1>0
+        \setcounter{homeworkProblemCounter}{#1}
+    \fi
+    \section{Problem \arabic{homeworkProblemCounter}}
+    \setcounter{partCounter}{1}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+%
+% Homework Details
+%   - Title
+%   - Due date
+%   - Class
+%   - Section/Time
+%   - Instructor
+%   - Author
+%
+
+\newcommand{\hmwkTitle}{Assignment 1}
+\newcommand{\hmwkDueDate}{October 8, 2018}
+\newcommand{\hmwkClass}{PF3}
+\newcommand{\hmwkClassTime}{Spring Semester}
+\newcommand{\hmwkClassInstructor}{Prof. Walter Binder }
+\newcommand{\hmwkAuthorName}{\textbf{A. Romanelli}}
+
+%
+% Title Page
+%
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+    \normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate\ at 8:30am}\\
+    \vspace{0.1in}\large{\textit{\hmwkClassInstructor}}
+    \vspace{3in}
+}
+
+\author{\hmwkAuthorName}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+
+\begin{homeworkProblem}
+\begin{enumerate}[label=\arabic*]
+	\item 
+	\begin{enumerate}[label=.\arabic*]
+		\item \texttt{"This is printed in class B"}, it comes from the method print defined in B, which overloads the original method defined in A, but since the type of the argument B, thus the latter is called.
+		\item An abstract class cannot be instantiated: \verb|new A()| is an invalid statement.
+		\item Argument mismatch: a method that takes a String as type of the argument cannot be found and thus an exception is thrown.
+		\item \texttt{"This is printed in class A"}, it comes from the method print defined in A, after an object of class B is casted into an object of class A. This means that the object of class B on which the method is called as both methods for an argument of type A and an argument of type B, since the argument is of type A, the method inherited from class A is used.
+		\item \texttt{"This is printed in class A"} is the result. The object a is instantiated from the class B and that's its dynamic type, but it's declared type is A and thus in the method call, the argument type is going to be A and thus the method defined in A will be called.
+		\item The method print is not defined within the class Object and would thus throw an exception.
+		\item Abstract class A cannot be instantiated.
+		\item \texttt{"This is printed in class A"}. This happens because we instantiated an object of class B but cast it into an object of type A, thus not having the method defined in the B class. When we call the method print passing an object of class B, the method A is used anyway because it's the only one available and accepts all subtypes of class A.
+		\item Argument mismatch, a method that takes a String as argument cannot be found and thus raises an exception.
+		\item Abstract class A cannot be instantiated.
+	\end{enumerate}
+	\item
+	\begin{enumerate}[label=.\arabic*]
+		\item Overload, the two methods coexist and both can be used depending on the type of the provided argument.
+		\item Override, the two methods share the same argument type, hence when the method print is defined again in C (subclass of A) taking the same argument type, it overrides the previously defined method with the new one.
+		\item None, because B and D are not related besides having a common parent of A and thus their methods do not have any interaction.
+		\item Override, the method defined in class D was already defined in class C from which it is inheriting and having the same argument type, the latter will override the former.
+		\item None, since the method defined in C is private, D does not inherit it and when it attempts to define the same method in class D, it does not override nor overload anything.
+	\end{enumerate}
+	\item
+		\begin{enumerate}[label=.\arabic*]
+		\item The declared type is Object and the possible dynamic types of $\circ$ are: Object/A/B/C/D;
+		\item The declared type is D and $\circ$ accepts only D as dynamic type;
+		\item Declared type C and $\circ$ accepts C and D as dynamic types;
+		\item Declared type A and accepts all its subtypes as dynamic types: A, B, C, D;
+		\item Declared type B, accepting as dynamic types: B.
+	\end{enumerate}
+\end{enumerate}
+
+\end{homeworkProblem}
+\begin{homeworkProblem}
+	\begin{enumerate}[label=\arabic*]
+		\item \texttt{IntSet2} violates the SP because it may throw \texttt{DuplicateNotAllowedException}, which the superclass method does not declare and thus this will cause an error at compile time.
+		\item No, it does not violate the SP, \texttt{int} is converted into an Integer through auto-boxing and \texttt{IntSet2.insert} overloads \verb|IntList.insert| without changing return type, parameters types or thrown exceptions.
+	\end{enumerate}
+\end{homeworkProblem}
+\newpage
+\begin{homeworkProblem}
+\begin{lstlisting}
+import java.math.BigDecimal;
+
+class BankAccount {
+
+    private BigDecimal amount;
+
+    public BankAccount(BigDecimal amount) {
+        this.amount = amount;
+    }
+
+    public void transferTo(BankAccount target, BigDecimal amount) {
+        // Local variables for Postconditions check
+        BigDecimal initialAmount = this.amount;
+        BigDecimal initialTargetAmount = target.amount;
+        // Invariants (2)
+        assert target.amount.compareTo(BigDecimal.ZERO) != -1: "The target BankAccount must have a positive amount";
+        assert this.amount.compareTo(BigDecimal.ZERO) != -1: "The current BankAccount must have a positive amount";
+        // Preconditions (3)
+        assert ((amount.compareTo(BigDecimal.ZERO)) != -1) && (amount.scale() == 2): "Amount to transfer must be positive and have two digits";
+        assert this != target: "Transfer target cannot be the same as the origin";
+        assert this.amount.compareTo(amount) != -1: "Cannot transfer more money that the BankAccount has";
+        // Code
+        this.amount = this.amount.subtract(amount);
+        target.amount = target.amount.add(amount);
+        // Invariants (2)
+        assert target.amount.compareTo(BigDecimal.ZERO) != -1: "The target BankAccount must have a positive amount";
+        assert this.amount.compareTo(BigDecimal.ZERO) != -1: "The current BankAccount must have a positive amount";
+        // Postconditions (2)
+        assert this.amount.add(amount).compareTo(initialAmount) == 0: "The money we transfered + the money we have must be equal to the money we originally had";
+        assert target.amount.subtract(amount).compareTo(initialTargetAmount) == 0: "The money the target has - the money we transfered must be equal to the money it had";
+    }
+
+    public String toString() {
+        return amount.toString();
+    }
+}
+\end{lstlisting}
+\end{homeworkProblem}
+\newpage
+\begin{homeworkProblem}
+\begin{lstlisting}
+class A {
+    public String show(Object obj) {
+        return ""+this.getClass().getSimpleName()+".show("+obj.getClass().getSimpleName()+")";
+    }
+}
+
+class B extends A {}
+
+class C extends B {}
+
+class D extends C {}
+
+public class Main {
+    public static void main(String[] args) {
+        A a1 = new A();
+        A a2 = new B();
+        B b = new B();
+        C c = new C();
+        D d = new D();
+        System.out.println(a1.show(b)); // 1
+        System.out.println(a1.show(c)); // 2
+        System.out.println(a1.show(d)); // 3
+        System.out.println(a2.show(b)); // 4
+        System.out.println(((B) a2).show(b)); // 5
+        System.out.println(a2.show(c)); // 6
+        System.out.println(a2.show(d)); // 7
+        System.out.println(b.show(b)); // 8
+        System.out.println(b.show(c)); // 9
+        System.out.println(b.show(d)); // 10
+    }
+}
+\end{lstlisting}
+This implementation of the A class provides the exact same functionality of initially proposed design.
+\end{homeworkProblem}
+
+\end{document}

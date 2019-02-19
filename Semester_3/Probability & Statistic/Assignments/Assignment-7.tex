@@ -1,0 +1,272 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{amssymb}
+\usepackage{todonotes}
+\usepackage{mathtools}
+\usepackage{wasysym}
+\usepackage{cancel}
+\usepackage{phaistos}
+\usepackage{listings}
+\usepackage[usestackEOL]{stackengine}[2013-10-15]
+\def\x{\hspace{6ex}}    %BETWEEN TWO 1-DIGIT NUMBERS
+\def\y{\hspace{4.9ex}}  %BETWEEN 1 AND 2 DIGIT NUMBERS
+\def\z{\hspace{3.8ex}}    %BETWEEN TWO 2-DIGIT NUMBERS
+\stackMath
+
+\usetikzlibrary{automata,positioning}
+
+%
+% Basic Document Settings
+%
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName}
+\chead{\hspace{2.5cm} \hmwkClass\ (\hmwkClassInstructor): \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1}}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\newcount\colveccount
+\newcommand*\colvec[1]{
+        \global\colveccount#1
+        \begin{pmatrix}
+        \colvecnext
+}
+\def\colvecnext#1{
+        #1
+        \global\advance\colveccount-1
+        \ifnum\colveccount>0
+                \\
+                \expandafter\colvecnext
+        \else
+                \end{pmatrix}
+        \fi
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+\newenvironment{homeworkProblem}[1][-1]{
+    \ifnum#1>0
+        \setcounter{homeworkProblemCounter}{#1}
+    \fi
+    \section{Problem \arabic{homeworkProblemCounter}}
+    \setcounter{partCounter}{1}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+%
+% Homework Details
+%   - Title
+%   - Due date
+%   - Class
+%   - Section/Time
+%   - Instructor
+%   - Author
+%
+
+\newcommand{\hmwkTitle}{Assignment 7}
+\newcommand{\hmwkDueDate}{20 December, 2018}
+\newcommand{\hmwkClass}{Probability \& Statistics}
+\newcommand{\hmwkClassTime}{Fall Semester}
+\newcommand{\hmwkClassInstructor}{Prof. D. Eynard}
+\newcommand{\hmwkAuthorName}{\textbf{A. Romanelli} / \textbf{A. Vicini}}
+
+%
+% Title Page
+%
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+    \normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate\ at 8:30am}\\
+    \vspace{0.1in}\large{\textit{\hmwkClassInstructor}}
+    \vspace{3in}
+}
+
+\author{\hmwkAuthorName}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+
+\begin{homeworkProblem}
+	\begin{enumerate}
+		\item We know from the nature of politics that the distribution that we are dealing with will be a binomial one. As seen in class we can get an estimation of $\hat p$ by computing:
+		$$\hat p = \left(\sum_{i=1}^nx_i\right)\cdot \frac1n$$
+		Which yields the following proportion for candidate A:
+		$$\frac{185}{351} \approx 0.527 = 52.7\% \text{ of the voters}$$
+		Against candidate B:
+		$$\frac{351-185}{351} \approx 0.473 = 47.3\% \text{ of the voters}$$
+		We can see that candidate A will be slightly favoured with a 2.7\% margin of vantage.
+		\item We want to find a 95\% confidence interval for the $\hat p$ that we just computed:
+		$$\text{se}=\sqrt{\hat p (1- \hat p)/n} = 0.027$$
+		We can thus attempt to find an interval so that our confidence results:
+		$$P(\hat p - \delta < \hat P < \hat p + \delta) = 0.95$$
+		The estimation of the proportion can be treated as a random variable binomially distributed, since each sample would either satisfy our confidence interval or not. We can then treat this distribution as a normal one according to the \textbf{Central Limit Theorem}:
+		\begin{center}
+			$$\begin{array}{rcl}
+				P(\hat p - \delta < \hat P < \hat p + \delta) & = & P\left(-\frac{\delta}{\text{se}} < \frac{\hat P - \hat p}{\text{se}} < \frac{\delta}{\text{se}}\right) \\
+				 & = & 2\cdot\Phi\left(\frac{\delta}{\text{se}}\right) -1 \\
+			\end{array}$$
+		\end{center}
+		We now need to find $2\Phi\left(\frac{\delta}{\text{se}}\right) -1 = 0.95$, thus:
+		$$\Phi\left(\frac{\delta}{\text{se}}\right) = \frac{1+0.95}2$$
+		$$\frac{\delta}{\text{se}} = \Phi^{-1}\left(\frac{1+0.95}{2}\right)$$ 
+		$$\delta = 1.96 \cdot \text{se} = 0.053$$
+		We have now found the bounds of our interval to be: $[\hat p-\delta, \hat p + \delta] = [0.474, 0.58]$ \\
+		Since our $\hat p$ lies within this interval we can be pretty confident that the estimated proportion is favourable to A.
+		\item We want to have a margin of error $\delta = 0.02$, thus we'd need to increase our sample population $n$ such that:
+		$$\delta = 1.96 \cdot \text{se} = 0.02$$
+		$$\text{se} = \frac{0.02}{1.96}$$
+		$$\sqrt{\hat p(1- \hat p)/n} = 0.0102$$
+		$$\frac{0.249271}{0.00010404} = n$$
+		$$n = 2396$$
+	\end{enumerate}
+\end{homeworkProblem}
+\newpage
+\begin{homeworkProblem}
+	\begin{enumerate}
+		\item Given the following data: (13.0, 18.5, 16.4, 14.8, 20.8, 19.3, 18.8, 23.1, 25.1, 16.8, 20.4, 17.4, 16.0, 21.7, 15.2, 21.3, 19.4, 17.3, 23.2, 24.9, 15.2, 19.9, 19.1, 18.1, 25.2, 23.1, 15.3, 19.4, 21.5, 16.8, 15.6, 17.6) we computed the sample mean $\overline x$ and the standard deviation $\sigma$ with the following code:\\
+			\begin{lstlisting}
+samples <- c(13.0, 18.5, ..., 15.6, 17.6)
+mu <- mean(samples)
+print(mu)
+sigma <- sqrt(var(samples))
+print(sigma)
+			\end{lstlisting}
+		Which gives us $\overline x = 19.068, \sigma = 3.255$
+		\item Under the assumption of an underlaying normal distribution and variance $\sigma^2 = 3.12$, we can attempt to find a 95\% confidence interval in the following way:
+		$$\left[\overline x - \delta,\overline x + \delta\right]$$
+		$$\delta = z^*\frac{\sigma}{\sqrt n}$$
+		Where the z value for our 95\% confidence interval will be $z^* = 1.96$:
+		$$\delta_{0.95} = 1.96 \cdot \frac{\sqrt{3.12}}{\sqrt{32}} = 1.96 \cdot \frac{1.766}{5.657} = 0.612$$
+		Thus we get the resulting :
+		$$\text{CI}_{0.95} = [\overline x - \delta_{0.95}, \overline x + \delta_{0.95}] = [19.068 - 0.612, 19.068+0.612] = [18.46, 19.68]$$
+		\item In case of a 99\% confidence interval our $z^*$ would be 2.58 instead, which would result in the following margin of error:
+		$$\delta_{0.99} = 2.58 \cdot \frac{\sqrt{3.12}}{\sqrt{32}} = 0.806$$
+		And it's clearly visible that $\delta_{0.95} < \delta_{0.99}$ and thus we'd have a larger confidence interval than before. This comes from the fact that a wider interval grants us more confidence that our sample lies within the interval than not. \\ \\
+		Increasing the sample size $n$ will reduce the margin of error and also tighten the interval.
+	\end{enumerate}
+\end{homeworkProblem}
+\newpage
+\begin{homeworkProblem}
+\begin{enumerate}[label=\alph*)]
+	\item 	Under the assumption of a biased coin with $\hat p = 0.6$, we can compute the probability as the one of a binomial distribution:
+	$$P(S_n = n\cdot \hat p) = {n \choose n \cdot \hat p}\hat p^{n\hat p}(1-\hat p)^{n(1-\hat p)}$$
+	$$P\left(S_n = \frac35n\right) = {n \choose \frac35n}\left(\frac35\right)^{\frac35n}\left(\frac25\right)^{\frac25n}$$
+	For $n=10$:
+	$$P(S_{10} = 6) = {10 \choose 6}\left(\frac35\right)^{6}\left(\frac25\right)^{4} \approx 210 \cdot 0.0466 \cdot 0.0256 = 0.25$$
+	For $n=100$:
+	$$P(S_{100} = 60) = {100 \choose 60}\left(\frac35\right)^{60}\left(\frac25\right)^{40} \approx 0.081$$
+	For $n=1000$:
+	$$P(S_{1000} = 600) = {1000 \choose 600} \left(\frac35\right)^{600}\left(\frac25\right)^{400} \approx 0.026$$
+\end{enumerate}
+
+\end{homeworkProblem}
+\newpage
+\begin{homeworkProblem}
+
+\end{homeworkProblem}
+\newpage
+\begin{homeworkProblem}
+	To accept or reject H0 we need to compute the z-value:
+	$$z = \frac{x -\mu}{\sigma/\sqrt n} \Rightarrow z = \frac{113.5-110}{10/4} = 1.4$$
+	If the resulting $z$ is greater than what we just computed, then we'll accept H0, else we reject it. 
+	\\\\
+	\begin{enumerate}[label=\alph*)]
+		\item 	A 5\% significance level corresponds to $\alpha = 0.05$: $z_{5\%} = \Phi^{-1}(0.95) \overset{?}{>} 1.4$
+	$$z_{5\%} = 1.65 > 1.4\text{, thus we accept H0}$$
+		\item Given $\alpha = 0.10$: $z_{10\%} = \Phi^{-1}(0.90)\overset{?}{>} 1.4$
+		$$z_{10\%} = 1.28 < 1.4\text{, thus we reject H0 and accept H1 instead}$$
+		\item The p-value corresponds to the right-tail-end probability of the null hypothesis H0:
+		$$p = 1 - \Phi(z) = 1 - \Phi(1.4) \approx 1 - 0.919 = 0.081 $$
+	\end{enumerate}
+\end{homeworkProblem}
+\newpage
+\begin{homeworkProblem}
+	
+\end{homeworkProblem}
+\end{document}

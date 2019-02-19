@@ -1,0 +1,21 @@
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-content: center;
+}
+
+.gallery img {
+  height: 100px;
+  max-width: 200px;
+  min-width: 80px;
+  opacity: 0.75;
+  transition: 0.2s ease-in-out all;
+}
+
+.gallery img:hover {
+  opacity: 1;
+  transform: scale(1.25);
+  border: 2px groove white;
+  z-index: 1000;
+}

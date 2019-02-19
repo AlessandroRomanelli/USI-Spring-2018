@@ -1,0 +1,17 @@
+<html>
+  <body>
+    <h2>Login</h2>
+    <form action='/auth' method='POST' enctype='x-www-form-urlencoded'>
+      <fieldset>
+        <label for='username'>Username:&nbsp;</label>
+        <input type='text' name='username'></input>
+      </fieldset>
+      <fieldset>
+        <label for='password'>Password:&nbsp;</label>
+        <input type='password' name='password'></input>
+      </fieldset>
+      <input type='submit' value='Login'>
+      <small><a href='/auth/signup'>Sign up!</a></small>
+    </form>
+  </body>
+</html>

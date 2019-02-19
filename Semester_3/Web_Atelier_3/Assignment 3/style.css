@@ -1,0 +1,136 @@
+/* DO NOT MODIFY */
+body{
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+
+#app{
+  display: flex;
+}
+
+#canvas{
+  border: 1px solid #bbb;
+}
+
+.toolbar {
+  width: 56px;
+  text-align: center;
+}
+
+.toolbar button {
+  height: 25px;
+  width: 52px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+#brush-toolbar{
+   width: 84px;
+}
+
+#brush-toolbar button{
+  height: 40px;
+  width: 80px;
+}
+
+#palette{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  width: 53px;
+  height: 204px;
+  background-color: buttonface;
+  cursor: pointer;
+}
+
+.toolbar #camera-btn{
+  font-size: 1.5em;
+  line-height: 1.5em;
+  color: #444;
+  background: none;
+  border: none;
+  border-radius: 3px;
+  height: 40px;
+  outline: none;
+}
+
+.toolbar #camera-btn:hover{
+  background: #70a0e8;
+}
+
+.toolbar #camera-btn:active{
+  background: #0e57c3;
+}
+
+.p-color{
+  width: 25px;
+  height: 25px;
+}
+
+.black {background-color:rgb(0, 0, 0);}
+.dark-gray {background-color:rgb(87, 87, 87);}
+.red {background-color:rgb(173, 35, 35);}
+.blue {background-color:rgb(42, 75, 215);}
+.green {background-color:rgb(29, 105, 20);}
+.brown {background-color:rgb(129, 74, 25);}
+.purple {background-color:rgb(129, 38, 192);}
+.light-gray {background-color:rgb(160, 160, 160);}
+.light-green {background-color:rgb(129, 197, 122);}
+.light-blue {background-color:rgb(157, 175, 255);}
+.cyan {background-color:rgb(41, 208, 208);}
+.orange {background-color:rgb(255, 146, 51);}
+.yellow {background-color:rgb(255, 238, 51);}
+.tan {background-color:rgb(233, 222, 187);}
+.pink {background-color:rgb(255, 205, 243);}
+.white {background-color:rgb(255, 255, 255);}
+
+#clock {
+  background-color: #ddd;
+  width: 360px;
+  height: 48px;
+  text-align: center;
+  position: relative;
+  font-size: 2.5rem;
+  margin-top: -10px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+#clock-time,
+#progress-bar {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+#clock-time {
+  z-index: 10;
+  line-height: 48px; /* same height as #clock so that the time is vertically centered */
+}
+
+#progress-bar {
+  width: 0%;
+  height: 48px;
+  background-color: #8DFF80;
+  text-align: center;
+  line-height: 30px;
+  color: white;
+}
+
+#favourites div.gallery {
+    margin: 5px;
+    float: left;
+    width: 200px;
+}
+
+#favourites div.gallery img {
+    width: 90%;
+    height: 100px;
+    box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.42);
+    margin-left: 10px;
+}
+
+#favourites div.desc {
+    padding: 15px;
+    text-align: center;
+}

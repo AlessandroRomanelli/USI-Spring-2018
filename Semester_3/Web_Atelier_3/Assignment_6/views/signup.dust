@@ -1,0 +1,20 @@
+<html>
+  <body>
+    <h2>Signup</h2>
+    <form action='/auth/signup' method='POST' enctype='x-www-form-urlencoded'>
+      <fieldset>
+        <label for='username'>Username:&nbsp;</label>
+        <input type='text' name='username'></input>
+      </fieldset>
+      <fieldset>
+        <label for='password'>Password:&nbsp;</label>
+        <input type='password' name='password'></input>
+      </fieldset>
+      <fieldset>
+        <label for='confirmPassword'>Confirm Password:&nbsp;</label>
+        <input type='password' name='confirmPassword'></input>
+      </fieldset>
+      <input type='submit' value='Register'>
+    </form>
+  </body>
+</html>

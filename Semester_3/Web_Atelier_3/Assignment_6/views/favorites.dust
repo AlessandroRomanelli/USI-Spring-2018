@@ -1,0 +1,18 @@
+<!-- DON'T MODIFY THIS FILE -->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Canvas Application - Web Atelier 2018</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Merriweather|Montserrat" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+
+<body>
+    {> "./partials/updateFavorite"/}
+</body>
+
+</html>

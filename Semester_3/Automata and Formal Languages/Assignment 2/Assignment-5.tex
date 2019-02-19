@@ -1,0 +1,202 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{amssymb}
+\usepackage{todonotes}
+\usepackage{mathtools}
+\usepackage{wasysym}
+\usepackage{cancel}
+
+\usetikzlibrary{automata,positioning}
+
+%
+% Basic Document Settings
+%
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName}
+\chead{\hmwkClass\ (\hmwkClassInstructor): \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\newcount\colveccount
+\newcommand*\colvec[1]{
+        \global\colveccount#1
+        \begin{pmatrix}
+        \colvecnext
+}
+\def\colvecnext#1{
+        #1
+        \global\advance\colveccount-1
+        \ifnum\colveccount>0
+                \\
+                \expandafter\colvecnext
+        \else
+                \end{pmatrix}
+        \fi
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+\newenvironment{homeworkProblem}[1][-1]{
+    \ifnum#1>0
+        \setcounter{homeworkProblemCounter}{#1}
+    \fi
+    \section{Problem \arabic{homeworkProblemCounter}}
+    \setcounter{partCounter}{1}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+%
+% Homework Details
+%   - Title
+%   - Due date
+%   - Class
+%   - Section/Time
+%   - Instructor
+%   - Author
+%
+
+\newcommand{\hmwkTitle}{Assignment 5}
+\newcommand{\hmwkDueDate}{December 3, 2018}
+\newcommand{\hmwkClass}{AFL}
+\newcommand{\hmwkClassTime}{Fall Semester}
+\newcommand{\hmwkClassInstructor}{Prof. Laura Pozzi}
+\newcommand{\hmwkAuthorName}{\textbf{A. Romanelli}}
+
+%
+% Title Page
+%
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+    \normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate\ at 11:55pm}\\
+    \vspace{0.1in}\large{\textit{\hmwkClassInstructor}}
+    \vspace{3in}
+}
+
+\author{\hmwkAuthorName}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+
+\begin{homeworkProblem}
+	We want to write the CFGs corresponding to the following languages:
+	\begin{enumerate}[label=L\arabic*]
+		\item $=\{w = 0^i 1^k | i = k+2;\ i,k>0 \} \equiv \text{L1}=\{w = 0^{k+2}i^k|i,k > 0 \}$:
+		\\ $S\mapsto 0S1\ |\ 0001$
+		\item $= \{w | w \text{ is a palindrome and has at least two 0s and two 1s}\}$:
+		\\ $S\mapsto 1A1\ |\ 0B0$
+		\\ $A\mapsto 1A1\ |\ 0C0$
+		\\ $B\mapsto 0B0\ |\ 1C1$
+		\\ $C\mapsto 0C0\ |\ 1C1\ |\ 0\ |\ 1\ |\ \epsilon$
+		\item $= \{w | w \text{ starts and ends with the same symbol and has an odd number of 0s}\}$:
+		\\ $S\mapsto 1A1\ |\ 0A0\ |\ 0$
+		\\ $A\mapsto 1A\ |\ 0B\ |\ 0$
+		\\ $B\mapsto 1B\ |\ 0A\ |\ 1$	
+		\item $= \{w | w \text{ has odd length and the middle symbol in w is a 0 and w has an even number of 0s} \}$
+		\\ $S\mapsto 0S0\ |\ 1S1\ |\ 0O1\ |\ 1O0$
+		\\ $O\mapsto 0O0\ |\ 1O1\ |\ 0S1\ |\ 1S0\ |\ 0$
+		\item $= \{ a^ib^jc^k | i \neq j \vee j \neq k, \quad i,j,k \geq 0 \}$
+		\\ $S \mapsto S_1\ |\ S_2$
+		\\ $S_1 \mapsto KC$
+		\\ $S_2 \mapsto AQ$
+		\\ $K \mapsto aKb\ |\ aA\ |\ bB$
+		\\ $Q \mapsto bQc\ |\ bB\ |\ cC$
+		\\ $A \mapsto aA\ |\ \epsilon$
+		\\ $B \mapsto bB\ |\ \epsilon$
+		\\ $C \mapsto cC\ |\ \epsilon$
+		\\\\
+		Find the regular expression for the following language:
+		\item $= \{ w | w \text{ every 1 is followed by at least a 0}\},\qquad \Sigma = \{0,1,2\}$
+		\\ $$\left(10(0 \cup 2)^*\right)^*(0 \cup 2)^*$$
+		$$(0 \cup 2 \cup 10)^*$$
+		\end{enumerate}
+\end{homeworkProblem}
+
+\end{document}

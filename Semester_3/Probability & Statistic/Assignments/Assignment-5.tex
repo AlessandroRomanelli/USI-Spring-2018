@@ -1,0 +1,408 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{amssymb}
+\usepackage{todonotes}
+\usepackage{mathtools}
+\usepackage{wasysym}
+\usepackage{cancel}
+\usepackage{phaistos}
+\usepackage[usestackEOL]{stackengine}[2013-10-15]
+\def\x{\hspace{6ex}}    %BETWEEN TWO 1-DIGIT NUMBERS
+\def\y{\hspace{4.9ex}}  %BETWEEN 1 AND 2 DIGIT NUMBERS
+\def\z{\hspace{3.8ex}}    %BETWEEN TWO 2-DIGIT NUMBERS
+\stackMath
+
+\usetikzlibrary{automata,positioning}
+
+%
+% Basic Document Settings
+%
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName}
+\chead{\hspace{2.5cm} \hmwkClass\ (\hmwkClassInstructor): \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1}}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\newcount\colveccount
+\newcommand*\colvec[1]{
+        \global\colveccount#1
+        \begin{pmatrix}
+        \colvecnext
+}
+\def\colvecnext#1{
+        #1
+        \global\advance\colveccount-1
+        \ifnum\colveccount>0
+                \\
+                \expandafter\colvecnext
+        \else
+                \end{pmatrix}
+        \fi
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+\newenvironment{homeworkProblem}[1][-1]{
+    \ifnum#1>0
+        \setcounter{homeworkProblemCounter}{#1}
+    \fi
+    \section{Problem \arabic{homeworkProblemCounter}}
+    \setcounter{partCounter}{1}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+%
+% Homework Details
+%   - Title
+%   - Due date
+%   - Class
+%   - Section/Time
+%   - Instructor
+%   - Author
+%
+
+\newcommand{\hmwkTitle}{Assignment 5}
+\newcommand{\hmwkDueDate}{November 23, 2018}
+\newcommand{\hmwkClass}{Probability \& Statistics}
+\newcommand{\hmwkClassTime}{Fall Semester}
+\newcommand{\hmwkClassInstructor}{Prof. D. Eynard}
+\newcommand{\hmwkAuthorName}{\textbf{A. Romanelli} / \textbf{A. Vicini}}
+
+%
+% Title Page
+%
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+    \normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate\ at 8:30am}\\
+    \vspace{0.1in}\large{\textit{\hmwkClassInstructor}}
+    \vspace{3in}
+}
+
+\author{\hmwkAuthorName}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+
+\begin{homeworkProblem}
+	Given $X = Y = \{0,1,2\}$ and the following probability distribution:
+	\begin{table}[h]
+		\centering
+		\begin{tabular}{c||c|c|c||c}
+			$~_Y^{\ \  X}$ & 0 & 1 & 2 & $P(Y)$\\
+			\hline\hline
+			0 & & & & \\
+			\hline
+			1 & & & & \\
+			\hline
+			2 & & & & \\
+			\hline\hline
+			$P(X)$ & $\frac12$ & $\frac14$ & $\frac14$
+		\end{tabular}
+	\end{table} \\
+	Knowing that:
+	\begin{itemize}
+		\item $P_{Y|X}(0,0) = 1$
+		\item $P_{Y|X}(0,1) = P_{Y|X}(1,1) = \frac12$
+		\item $P_{Y|X}(0,2) = P_{Y|X}(1,2) = P_{Y|X}(2,2) = \frac13$
+	\end{itemize}
+	We'll compute the following probabilities:\\\\
+	We can reverse the formula:
+	$$P_{Y|X} = \frac{P_{XY}(x,y)}{P_X(x)}$$
+	to obtain:
+	$$P_{XY} = P_X(x) \cdot P_{Y|X}(y,x)$$
+	and thus: \\ \\ 
+	\begin{minipage}{0.5\textwidth}
+		\begin{itemize}
+			\item $P_{XY}(0,0) = P_X(0) \cdot P_{Y|X}(0,0) = \frac12$
+			\item $P_{XY}(0,1) = P_X(1) \cdot P_{Y|X}(1,0) = 0$
+			\item $P_{XY}(0,2) = P_X(2) \cdot P_{Y|X}(2,0) = 0$
+			\item $P_{XY}(1,0) = P_X(1) \cdot P_{Y|X}(0,1) = \frac14 \cdot \frac12 = \frac18$
+		\end{itemize}
+	\end{minipage}
+	\begin{minipage}{0.5\textwidth}
+		\begin{itemize}
+			\item $P_{XY}(2,0) = P_X(2) \cdot P_{Y|X}(0,2) = \frac14 \cdot \frac13 = \frac1{12}$
+			\item $P_{XY}(1,1) = P_X(1) \cdot P_{Y|X}(1,1) = \frac14 \cdot \frac12 = \frac18$
+			\item $P_{XY}(1,2) = P_X(1) \cdot P_{Y|X}(2,1) = 0$
+			\item $P_{XY}(2,1) = P_X(2) \cdot P_{Y|X}(1,2) = \frac13 \cdot \frac14 = \frac1{12}$ 
+		\end{itemize}
+	\end{minipage}
+	\begin{itemize}
+	\centering
+		\item $P_{XY}(2,2) = P_X(2) \cdot P_{Y|X}(2,2) = \frac14 \cdot \frac13 = \frac1{12}$
+	\end{itemize}
+	Which gives us back the following table:
+	 \begin{table}[h]
+		\centering
+		\begin{tabular}{c||c|c|c||c}
+			$~_Y^{\ \  X}$ & 0 & 1 & 2 & $P(Y)$\\
+			\hline\hline
+			0 & $\frac12$ & $\frac18$ & $\frac1{12}$ & $\frac{17}{24}$\\
+			\hline
+			1 & 0 & $\frac18$ & $\frac1{12}$ & $\frac5{24}$ \\
+			\hline
+			2 & 0 & 0 & $\frac1{12}$ & $\frac1{12}$ \\
+			\hline\hline
+			$P(X)$ & $\frac12$ & $\frac14$ & $\frac14$
+		\end{tabular}
+	\end{table} \\
+	$P(Y)$ was easily findable by computing the respecting sums: \\
+	$P_Y(0) = \frac12 + \frac18 + \frac1{12} = \frac{17}{27}, \hfill P_Y(1) = \frac18 + \frac1{12} = \frac5{24} \hfill P_Y(2) = \frac1{12}$ \\\\
+	Now we'll have to compute $P_{X|Y}$, knowing that:
+	$$P_{X|Y} = \frac{P_{XY}(x,y)}{P_Y(y)}$$
+	\newpage
+		\begin{minipage}{0.5\textwidth}
+		\begin{itemize}
+			\item $P_{X|Y}(0,0) = \frac12 \cdot \frac{24}{17} = \frac{12}{17}$
+			\item $P_{X|Y}(0,1) = 0$
+			\item $P_{X|Y}(0,2) = 0 \cdot 12 = 0$
+			\item $P_{X|Y}(1,0) = \frac18 \cdot \frac{24}{17} = \frac3{17}$
+		\end{itemize}
+	\end{minipage}
+	\begin{minipage}{0.5\textwidth}
+		\begin{itemize}
+			\item $P_{X|Y}(2,0) = \frac1{12} \cdot \frac{24}{17} = \frac2{17}$
+			\item $P_{X|Y}(2,1) = \frac1{12} \cdot \frac{24}5 = \frac25$
+			\item $P_{X|Y}(2,2) = \frac1{12} \cdot 12 = 1$
+			\item $P_{X|Y}(1,1) = \frac18 \cdot \frac{24}5 = \frac35$
+		\end{itemize}
+	\end{minipage}
+	\begin{itemize}
+	\centering
+		\item $P_{X|Y}(1,2) = 0$
+	\end{itemize}
+%	Which yields:
+%	 \begin{table}[h]
+%		\centering
+%		\begin{tabular}{c||c|c|c||c}
+%			$~_Y^{\ \  X}$ & 0 & 1 & 2 & $P(Y)$\\
+%			\hline\hline
+%			0 & $\frac{12}{17}$ & $\frac3{17}$ & $\frac2{17}$ & $\frac{17}{24}$\\
+%			\hline
+%			1 & 0 & $\frac35$ & $\frac25$ & $\frac5{24}$ \\
+%			\hline
+%			2 & 0 & 0 & $1$ & $\frac1{12}$ \\
+%			\hline\hline
+%			$P(X)$ & $\frac12$ & $\frac14$ & $\frac14$
+%		\end{tabular}
+%	\end{table} \\
+	We shall now compute $\Var(X)$ and $\Var(Y)$ which we know to be given by: $\E[X^2] - \E[X]^2$ and $\E[Y^2] - \E[Y]^2$ respectively.
+	$$\E[X] = \sum_{i=0}^2 i \cdot P_X(i) = 0 \cdot \frac14 + 1 \cdot \frac14 + 2 \cdot \frac14 = \frac34$$
+	$$\E[X^2] = \sum_{i=0}^2 i^2 \cdot P_X(i) = 0 + \frac14 + 4 \cdot \frac14 = \frac54$$
+	
+	$$\E[Y] = \sum_{i=0}^2 i \cdot P_Y(i) = 0 + \frac5{24} + 2 \cdot \frac1{12} = \frac38$$
+	$$\E[Y^2] = \sum_{i=0}^2 i^2 \cdot P_Y(i) = 0 + \frac5{24} + 4 \cdot \frac1{12} = \frac{13}{24}$$
+	
+	If we plug in the values we get:
+	
+	$$\Var(X) = \frac54 - \left(\frac34\right)^2 = \frac{11}{16}$$
+	$$\Var(Y) = \frac{13}{24} - \left(\frac38\right)^2 = \frac{77}{192}$$
+	
+	We can compute the $\Cov(X,Y)$ as: 
+	$$\E[XY] - \E[X]\E[Y]$$
+	We can obtain 
+	$$\E[XY] = \sum_{i=0}^2 xy \cdot P_{XY}(x,y) = \frac58$$
+	Substituting we get:
+	$$\Cov(X,Y) = \E[XY] - \E[X]\E[Y] = \frac58 - \frac34 \cdot \frac38 = \frac{11}{32}$$
+\end{homeworkProblem}
+\newpage
+\begin{homeworkProblem}
+	If we let $X$ be a random variable with a range $\mathcal{X} = \{1,2,\dots,k\}$ and $P_X(k) = \frac1k$, then:
+	$$\E[X] = \sum_{i=1}^k i \cdot P_X(i)$$
+	Under the previous assumption of a uniform distribution, we can say that $P_X(i)$ is a constant and thus:
+	$$\E[X] = \frac1k\sum_{i=0}^k i = \frac1k\cdot\frac{k(k+1)}{2} = \frac{k+1}2$$
+	We'll also need $\E[X^2]$ for the next step:
+	$$\E[X^2] = \frac1k\sum_{i=0}^k i^2 = \frac1{6k}k(k+1)(2k+1) = \frac16(k+1)(2k+1)$$
+	And now we should be finally able to obtain $\Var(X)$:
+	$$\Var(X) = \E[X^2] - \E[X]^2 = \frac16(k+1)(2k+1) - \left(\frac{k+1}2\right)^2 = \frac1{12}(k^2-1)$$
+\end{homeworkProblem}
+\newpage
+\begin{homeworkProblem}
+We can start by recalling what the Chebyshev inequality tells us that, given any $\epsilon > 0$ which we can associate with the probability of being farther out than $\epsilon$ from the mean bounded by the variance as:
+$$P(|X-\E[X]|\geq\epsilon)\leq \frac{\Var(X)}{\epsilon^2}$$
+For a symmetric distribution like a Binomial one we can say:
+$$P(X-\E[X]\geq\epsilon)\leq \frac12\frac{\Var(X)}{\epsilon^2}$$
+Since $P(|X-\E[X]|\geq\epsilon) = 2\cdot P(X-\E[X]\geq\epsilon)$ \\ \\
+To then compute $\Var(X)$, we'll need the expectation values of the outcomes of the roulette for each game. Let then $X_i$ be the random variable associated with a given game:
+$$\E[X_i] = \sum P_{X_i}(x)\cdot x = \frac12 \cdot 0 + \frac12 \cdot 1 = \frac12, \qquad x \in \{0, 1\}$$
+To compute the expectation value of $X_n$, that is, the mean of all the $X_i$:
+$$X_n = \frac{1}{n}\sum_{i=1}^{n}X_i$$
+$$\E[X_n] = \frac1n\sum_{i=1}^n\E[X_i]=\frac1n\cdot n \cdot \frac{1}{2}= \frac{1}{2}$$
+We'll now compute $\Var(X_i)$, which we'll need to compute $\Var(X_n)$:\\
+$$\Var(X_i)=\E[X_i^2]-\E[X_i]^2$$
+Since the values 0,1 do not change when squared, we'll simply have to compute
+$$\E[X_i]-\E[X_i]^2 = \frac12 - \frac{1}{4} = \frac14$$
+And finally to compute $\Var(X_n)$ we do
+$$\Var(X_n) = \E[X_n^2] - \E[X_n]^2 = \left( \frac1n\sum_{i=1}^n\E[X_i]\right)^2 - \frac14 = \left(\frac1{n^2}\right) \cdot n \cdot \frac14 = \frac1{4n}$$
+\begin{enumerate}[label=\textbf{\alph*)}]
+	\item Out of 40 rounds, to have at least 70\% black results means that: $n = 40, p = 0.7, \Var(X_{40}) = \frac1{160}$, which gives us:
+	\begin{table}[h]
+		\centering
+		\begin{tabular}{rl}
+			& $P(X_{40} - \E[X_{40}] \geq \epsilon) \leq \frac12\frac{\Var(X_{40})}{\epsilon^2}$\\
+			If we let: $X_{40} - \E[X_{40}] = \epsilon$& $P(X_{40} - \E[X_{40}] \geq 0.2) \leq \frac12\frac1{160\cdot (\frac15)^2}$\\
+			$\frac{1}{40} \cdot 40 \cdot 0.7 - \frac12 = \epsilon$&$P(X_{40} - \E[X_{40}] \geq 0.2) \leq \frac{25}{320}$\\
+			$\frac7{10} - \frac5{10} = \epsilon$&$P(X_{40} - \E[X_{40}] \geq 0.2) \leq 0.078125$\\
+			$\frac15 = \epsilon$&\\
+		\end{tabular}
+	\end{table}
+	\newpage
+	\item Out of 40 rounds, having at least 50.1\% black results would mean: $n = 40, p = 0.501, \Var(X_{40}) = \frac1{160}$
+	\begin{table}[h]
+		\centering
+		\begin{tabular}{rl}
+			& $P(X_{40} - \E[X_{40}] \geq \epsilon) \leq \frac12\frac{\Var(X_{40})}{\epsilon^2}$\\
+			If we let:  $X_{40} - \E[X_{40}] = \epsilon$& $P(X_{40} - \E[X_{40}] \geq 0.001) \leq \frac12\frac1{160\cdot (0.001)^2}$\\
+			$0.501 - 0.5 = \epsilon$&$P(X_{40} - \E[X_{40}] \geq 0.001) \leq \frac{1000000}{320}$\\
+			$0.001 = \epsilon$&$P(X_{40} - \E[X_{40}] \geq 0.001) \leq 3125$\\
+		\end{tabular}
+	\end{table}
+	\item Out of 1500 rounds, having at least 60\% black results means: $n = 1500, p = 0.6, \Var(X_{1500}) = \frac1{6000}$	
+	\begin{table}[h]
+		\centering
+		\begin{tabular}{rl}
+			& $P(X_{1500} - \E[X_{1500}] \geq \epsilon) \leq \frac12\frac{\Var(X_{1500})}{\epsilon^2}$\\
+			If we let: $X_{1500} - \E[X_{1500}] = \epsilon$& $P(X_{1500} - \E[X_{1500}] \geq 0.1) \leq \frac12\frac1{6000\cdot (0.1)^2}$\\
+			$0.6 - 0.5 = \epsilon$&$P(X_{40} - \E[X_{40}] \geq 0.001) \leq \frac{100}{12000}$\\
+			$0.1 = \epsilon$&$P(X_{40} - \E[X_{40}] \geq 0.001) \leq \frac1{120} \approx 0.0083$\\
+		\end{tabular}
+	\end{table}
+	\item Out of 1500 rounds, having at least 50.1\% black results means: $n=1500, p = 0.501, \Var(X_{1500}) = \frac1{6000}$
+	\begin{table}[h]
+		\centering
+		\begin{tabular}{rl}
+			 & $P(X_{1500} - \E[X_{1500}] \geq \epsilon) \leq \frac12\frac{\Var(X_{1500})}{\epsilon^2}$\\
+			If we let: $X_{1500} - \E[X_{1500}] = \epsilon$& $P(X_{1500} - \E[X_{1500}] \geq 0.001) \leq \frac12\frac1{6000\cdot (0.001)^2}$\\
+			$0.501 - 0.5 = \epsilon$&$P(X_{40} - \E[X_{40}] \geq 0.001) \leq \frac{1000000}{12000}$\\
+			$0.001 = \epsilon$&$P(X_{40} - \E[X_{40}] \geq 0.001) \leq \frac{1000}{12} \approx 83.333$\\
+		\end{tabular}
+	\end{table}
+
+	\item Out of $10^6$ rounds, having at least 70\% black results would mean: $n = 10^6, p = 0.7, \Var(X_{10^6}) = \frac1{4\cdot 10^6}$
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{rl}
+			 & $P(X_{10^6} - \E[X_{10^6}] \geq \epsilon) \leq \frac12\frac{\Var(X_{10^6})}{\epsilon^2}$\\
+			If we let: $X_{10^6} - \E[X_{10^6}] = \epsilon$& $P(X_{10^6} - \E[X_{10^6}] \geq 0.2) \leq \frac12\frac1{4\cdot 10^6\cdot (0.2)^2}$\\
+			$0.7 - 0.5 = \epsilon$&$P(X_{40} - \E[X_{40}] \geq 0.2) \leq \frac{25}{8 \cdot 10^6} \approx 3.125 \cdot 10^{-6}$\\
+			$0.2 = \epsilon$&\\
+		\end{tabular}
+	\end{table}
+		
+	\item Out of $10^6$ rounds, having at least 50.1\% black results means: $n = 10^6, p = 0.501, \Var(X_{10^6}) = \frac1{4\cdot 10^6}$
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{rl}
+			 & $P(X_{10^6} - \E[X_{10^6}] \geq \epsilon) \leq \frac12\frac{\Var(X_{10^6})}{\epsilon^2}$\\
+			If we let: $X_{10^6} - \E[X_{10^6}] = \epsilon$& $P(X_{10^6} - \E[X_{10^6}] \geq 0.001) \leq \frac12\frac1{4\cdot 10^6\cdot (0.001)^2}$\\
+			$0.501 - 0.5 = \epsilon$&$P(X_{40} - \E[X_{40}] \geq 0.001) \leq \frac{10^6}{8 \cdot 10^6}$ \\
+			$0.001 = \epsilon$&$P(X_{40} - \E[X_{40}] \geq 0.001) \leq \frac{10^6}{8 \cdot 10^6} = \frac18 = 0.125$\\
+		\end{tabular}
+	\end{table}
+\end{enumerate}
+\end{homeworkProblem}
+\newpage
+\begin{homeworkProblem}
+	Given the PDF of the standard normal distribution $\mathcal{N}(\mu,\sigma^2)$ we want to compute the following:
+	\begin{enumerate}[label=\textbf{\alph*)}]
+		\item $P(X>2) = 0.0228$ as it follows from the symmetry of the distribution. \\
+		$P(X\leq-2) \equiv P(X > 2)$, since $P(X = 2) = 0$
+		\item $P(X \geq -1)$ We can see that we can compute this as $1 - P(X \leq -1)$ and know by symmetry that $P(X \leq -1) \equiv P(X \geq 1)$, which gives us: $1 - 0.1587 = 0.8413$
+		\item $P(|X-\mu| < 1)$ given that $\mu = 0$ we need to compute the probability of $P(-1 < X < 1)$, which we can calculate as: $1 - P(X \leq -1) - P(X \geq 1)$, again, because of symmetry, $P(X \leq -1) \equiv P(X \geq 1)$ and thus we get: $1 - 2P(X \geq 1) = 1 - 2\cdot 0.1587 = 0.6826$
+		\item $P(|X-\mu| > 2)$ which again is the same as $P(X < -2 \cup X > 2) = P(X < -2) + P(X > 2)$ thus we can easily compute, again by symmetry $P(|X-\mu| > 2) = 2\cdot P(X>2) = 2\cdot0.0228 = 0.0456$ 
+		\item $P(X\neq 1)$, knowing that $P(X = 1) = 0$, we can find its complement by subtracting it from the total probability, which returns us $P(X\neq1) = 1 - P(X=1) = 1 - 0 = 1$ 
+	\end{enumerate}
+\end{homeworkProblem}
+\newpage
+\begin{homeworkProblem}
+	
+\end{homeworkProblem}
+\end{document}

@@ -1,0 +1,279 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{amssymb}
+\usepackage{todonotes}
+\usepackage{mathtools}
+\usepackage{wasysym}
+\usepackage{cancel}
+\usepackage{listings}
+
+\usetikzlibrary{automata,positioning}
+
+%
+% Basic Document Settings
+%
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,	                   % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{orange!90!black},       % keyword style
+  language=Java,                 % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=1,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{yellow!60!orange!80!black},     % string literal style
+  tabsize=2,	                   % sets default tabsize to 2 spaces
+  title=\lstname,                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+  keywords=[3]{self},
+  keywordstyle=[3]{\color{orange!50!gray}},
+  keywords=[4]{__init__, __lt__},
+  keywordstyle=[4]{\color{orange!50!gray}},
+  moredelim=**[is][\color{orange!90!black}]{@}{@}
+}
+
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName}
+\chead{\hspace{2.5cm} \hmwkClass\ (\hmwkClassInstructor): \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\newcount\colveccount
+\newcommand*\colvec[1]{
+        \global\colveccount#1
+        \begin{pmatrix}
+        \colvecnext
+}
+\def\colvecnext#1{
+        #1
+        \global\advance\colveccount-1
+        \ifnum\colveccount>0
+                \\
+                \expandafter\colvecnext
+        \else
+                \end{pmatrix}
+        \fi
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+\newenvironment{homeworkProblem}[1][-1]{
+    \ifnum#1>0
+        \setcounter{homeworkProblemCounter}{#1}
+    \fi
+    \section{Problem \arabic{homeworkProblemCounter}}
+    \setcounter{partCounter}{1}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+%
+% Homework Details
+%   - Title
+%   - Due date
+%   - Class
+%   - Section/Time
+%   - Instructor
+%   - Author
+%
+
+\newcommand{\hmwkTitle}{Assignment 3}
+\newcommand{\hmwkDueDate}{December 10, 2018}
+\newcommand{\hmwkClass}{PF3}
+\newcommand{\hmwkClassTime}{Spring Semester}
+\newcommand{\hmwkClassInstructor}{Prof. Walter Binder }
+\newcommand{\hmwkAuthorName}{\textbf{A. Romanelli}}
+
+%
+% Title Page
+%
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+    \normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate\ at 8:30am}\\
+    \vspace{0.1in}\large{\textit{\hmwkClassInstructor}}
+    \vspace{3in}
+}
+
+\author{\hmwkAuthorName}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+
+\begin{homeworkProblem}
+Assuming that we have a program which is parallelizable for the 90\%, it means that our total time on a single processor will be:
+$$T_1 = T_s + \frac{T_p}n =  \frac1{10}T_1 + \frac9{10}T_1$$
+\begin{enumerate}
+	\item Let's imagine that it takes 1s for the whole program to run, that means that $T_s = \frac1{10}s$ and $T_p = \frac{9}{10}s$, then if we scale this code up to 256 cores, we get:
+$$T_{256} = T_s + \frac{T_p}{256} \Rightarrow T_{256} = \frac1{10}T_1 + \frac9{10}\frac{T_1}{256} = \frac{256T_1 + 9T_1}{2560} = \frac{265}{2560}T_1 = \frac{53}{512}T_1$$
+This means that our final speedup w.r.t $T_1$ will be:
+$$S_{256} = \frac{T_1}{T_{256}} = \frac{T_1}{\frac{53}{512}T_1} = \frac{512}{53} = 9.\overline{6603773584905}
+$$
+If we further scale up the number of cores by a factor of 2 and 4 respectively we'll get:
+$$
+	T_{512} = \frac{512T_1 + 9T_1}{5120} = \frac{521}{5120}T_1
+$$$$
+	T_{1024} = \frac{1024T_1 + 9T_1}{10240} = \frac{1033}{10240}T_1
+$$$$
+	S_{512} = \frac{T_1}{T_{512}} = \frac{T_1}{\frac{521}{5120}T_1} = \frac{5120}{521} = 9.\overline{8272552783109404990403071017274472168905950095969289}
+$$$$
+	S_{1024} = \frac{T_1}{T_{1024}} = \frac{T_1}{\frac{1033}{10240}T_1} = \frac{10240}{1033} \approx 9.912875121006776379477250726040658276863504356243949... \text{\tiny(period 1032)}
+$$
+As the number of cores $n \rightarrow \infty$ the $T_n$ is given by:
+$$\lim_{n \rightarrow \infty}\left(T_s + \frac{T_p}n\right) = T_s$$
+Thus the time needed to run the sequential part of the program will be the fastest possible time, which would be a speed up w.r.t $T_1$ of:
+$$S_{\infty} = \frac{T_1}{T_{\infty}} = \frac{T_1}{\frac1{10}T_1} = 10$$
+\end{enumerate}
+\end{homeworkProblem}
+\newpage
+\begin{homeworkProblem}
+\begin{enumerate}
+	\item Check the attached code for the solution to this point.
+	\item In the case in which the array size is less than $2^{13} = 8192$, there's not going to be any substantial difference, since it will run very similarly as the \verb|mergeSort| implementation. In the case in which the program has only one physical core at disposal, the parallelized version will result slower, as it will have an overhead due to the thread instantiation without gaining any of the benefits of concurrency programming.
+\end{enumerate}
+\end{homeworkProblem}
+\newpage
+\begin{homeworkProblem}
+	\begin{enumerate}
+		\item \begin{enumerate}
+			\item The first \verb|synchronized| at line 15 is synchronized on the class "LogManager"
+			\item The second at line 20 is as well synchronized on the class "LogManager"
+			\item The third at line 38 is synchronized on the Map object \verb|allSimpleLogs|
+			\item The fourth at line 56 is synchronized on the Map object \verb|allSecurityLogs|
+			\item The fifth at line 62 is synchronized on the object invoking the instance method, instantiated from the class "SecurityLog"
+			\item The last at line 67 is syncrhonized again on the objected invoking the method, which is instantiated from the class "SecurityLog"
+		\end{enumerate}
+		\item \begin{enumerate}[label=\arabic*)]
+			\item The reason why the HashMap is still not thread safe is that, despite using the synchronization block, there are still methods which access or modify the map without synchronized blocks, thus it's thread unsafe.
+			\item There are two ways to solve the problem:
+			\begin{enumerate}
+				\item Wrap the parts of the program which interact with the HashMap object into synchronized blocks on the HashMap as well. This would work but it wouldn't be ideal as every time we utilise the HashMap we'd need to wrap the  code into a synchronized block.
+				\item We could define a ConcurrentHashMap class with synchronized methods or just use the already defined class by importing it from the \verb|java.util.concurrent| library.
+			\end{enumerate}
+		\end{enumerate}
+		\item \begin{enumerate}[label=\arabic*)]
+			\item Just like in the previous example, this HashMap also fails to use the synchronization block each time a method is invoked upon it and thus it cannot be guaranteed to not throw a ConcurrentOperationException.
+			\item The method is not thread safe for the HashMap because the method \\\verb|SecurityLog.updateSecurityLogByID| is synchronised on the object on which is invoked, which is not the HashMap but rather an instantiation of class \verb|SecurityLog|, thus this can be invoked by any thread whilst another thread is operating on the HashMap.
+			\item Just like before, we can prevent this behaviour by wrapping the body of the methods \\\verb|LogManager.getSecurityLogsByID| and \verb|SecurityLog.updateSecurityLogID| into blocks synchronized on the \verb|allSecurityLogs| HashMap object. Alternatively we could have used the \verb|ConcurrentHashMap| class instead of \verb|HashMap|.
+		\end{enumerate}
+		\item The two methods cannot run concurrently because they will require the lock on the same object, that is the object on which they are invoked, an instantiation of the class "SecurityLog" and thus when invoked at the same time they will require the lock on the same object and consequently they will run sequentially.
+		\item Since we now the method \verb|SecurityLog.addTextEntry| doesn't require the lock on the same object as \verb|SecurityLog.updateSecurityLogByID|, they will be able to run concurrently.
+	\end{enumerate}
+\end{homeworkProblem}
+\newpage
+\begin{homeworkProblem}
+	Out of the 6 original synchronized blocks, given the introduction of \verb|ConcurrentHashMap| and its thread safeness,  we can remove all of the previous synchronizations exception made for the one applied on the method \verb|SecurityLog.addTextEntry|, which still needs to be synchronized since ArrayList is not thread safe.
+\end{homeworkProblem}
+\begin{homeworkProblem}
+	I will denote $T1$ and $T2$ as the two threads and $T1_1$ as the first line of the first thread.
+	\begin{enumerate}[label=(\alph*)]
+		\item A possible result for $x$ would be 2, which would be given by the following execution: $T2_1, T1_1, T1_2, T2_2$, whereas another execution would yield $x=1$, in the case in which this was the program execution: $T1_1, T1_2, T2_1, T2_2$. \\
+		There are no other possible values for $x$ wand the other (valid) permutations of the execution yield the same results.
+		\item In this case the order of the operation does not influence the outcome since they perform the exact same operation and the operation is addition. Because of the commutativity of addition, the order in which we perform the operation doesn't influence the result. Thus our $x$ would be incremented by 10 for each of the two iterations, thus yielding $x=20$ for any possible execution combination.
+	\end{enumerate}
+\end{homeworkProblem}
+\end{document}

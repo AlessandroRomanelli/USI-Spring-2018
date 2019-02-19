@@ -1,0 +1,60 @@
+#!/usr/bin/env node
+const debug = require('debug')('canvas-server');
+const app = require('../app');
+const event = require('../pubsub');
+
+
+app.set('port', process.env.PORT || 3000);
+
+const server = app.listen(app.get('port'), () => {
+  debug(`Express server listening on port ${server.address().port}`);
+});
+
+const io = require('socket.io')(server);
+
+io.on('connection', (socket) => {
+  console.log('client connected');
+  socket.join('publish and subscribe');
+
+  socket.to('publish and subscribe').emit('message', { user: 'Server', text: 'Welcome!' });
+
+  // socket.on('message', (msg) => {
+  //   io.emit('message', msg);
+  // });
+
+  socket.on('canvas.draw', (event) => {
+    socket.broadcast.emit('canvas.draw', { stroke: event, id: socket.id });
+  });
+
+  socket.on('canvas.render', (event) => {
+    socket.broadcast.emit('canvas.render', event);
+  });
+
+  socket.on('canvas.start.drawing', () => {
+    socket.broadcast.emit('canvas.start.drawing', { id: socket.id });
+  });
+
+  socket.on('canvas.clear', () => {
+    socket.broadcast.emit('canvas.clear', { id: socket.id });
+  });
+
+  socket.on('canvas.undo', () => {
+    socket.broadcast.emit('canvas.undo', { id: socket.id });
+  });
+
+  socket.on('disconnect', () => {
+    console.log('client disconnected');
+  });
+});
+
+event.on('favorite.deleted', (favorite) => {
+  io.to('publish and subscribe').emit('favorite.deleted', favorite);
+});
+
+event.on('favorite.updated', (favorite) => {
+  io.to('publish and subscribe').emit('favorite.updated', favorite);
+});
+
+event.on('favorite.created', (favorite) => {
+  io.to('publish and subscribe').emit('favorite.created', favorite);
+});

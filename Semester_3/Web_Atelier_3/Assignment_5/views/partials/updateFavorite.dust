@@ -1,0 +1,40 @@
+<div id="favourites">
+  <h2>Favourites</h2>
+  <div>
+    {#storage}
+    <div style="display: inline-block; border: 2px groove black; margin: 0.5em;">
+      <div style="text-align: center">{.title}<br><small style="font-size:0.75em">{._id}</small></div>
+      <img width="300" height="200" src={.dataUrl} style="display: block;">
+      {?bookmarked}
+      <div>Bookmarked</div>
+      {:else}
+      <div>Not bookmarked</div>
+      {/bookmarked}
+
+      <form style="float: left" action="/favorites/{._id}" method="POST" enctype="application/x-www-form-urlencoded">
+        <input type="hidden" name="_method" value="PUT">
+        <input type="hidden" name="_id" value={._id}>
+        <label for="title">Name: </label>
+        <input type="text" name="title" value="">
+        <input type="hidden" name="dataUrl" value={.dataUrl}>
+        <input type="submit" value="Update">
+      </form>
+      <form style="float: right" action="/favorites/{._id}" method="POST" enctype="application/x-www-form-urlencoded">
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="hidden" name="_id" value={._id}>
+        <input type="submit" value="Delete">
+      </form>
+      <form action="/favorites/{._id}/bookmarked" method="POST" enctype="application/x-www-form-urlencoded">
+        <input type="hidden" name="_method" value="PUT">
+        <input type="hidden" name="_id" value={._id}>
+        {@eq key=bookmarked value="true" type="boolean"}
+          <input type="submit" value="Remove Bookmark">
+        {:else}
+          <input type="submit" value="Add Bookmark">
+        {/eq}
+      </form>
+    </div>
+    {/storage}
+  </div>
+    <!-- Favourites will go here (programmatically). Each favourite should be an <img> element -->
+</div>

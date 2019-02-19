@@ -1,0 +1,24 @@
+<div id="favorites">
+  <h2>
+    {@gt key=storage.length value=0}
+      {storage.length}&nbsp;
+      {@eq key=storage.length value=1}
+        Favourite
+      {:else}
+        Favorites
+      {/eq}
+    {:else}
+      No Favorites
+    {/gt}
+  </h2>
+  <form id='search'>
+    <label for='query'>Search in <b>Favorites</b>: </label>
+    <input type="text" name="query" value="" placeholder="Search for a favorite"></input>
+    <input type="checkbox" name="onlyBookmark" value="false"></input>
+  </form>
+  <form id='imgurSearch'>
+    <label for='query'>Search in <b>Imgur&trade;</b>: </label>
+    <input type="text" name="query" value="" placeholder="Search in imgur gallery"></input>
+  </form>
+  {> "./partials/multiple.dust"/}
+</div>

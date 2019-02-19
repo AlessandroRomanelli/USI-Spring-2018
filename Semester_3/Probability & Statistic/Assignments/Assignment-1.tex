@@ -1,0 +1,217 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{amssymb}
+\usepackage{todonotes}
+\usepackage{mathtools}
+\usepackage{wasysym}
+\usepackage{cancel}
+
+\usetikzlibrary{automata,positioning}
+
+%
+% Basic Document Settings
+%
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName}
+\chead{\hspace{2.5cm} \hmwkClass\ (\hmwkClassInstructor): \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\newcount\colveccount
+\newcommand*\colvec[1]{
+        \global\colveccount#1
+        \begin{pmatrix}
+        \colvecnext
+}
+\def\colvecnext#1{
+        #1
+        \global\advance\colveccount-1
+        \ifnum\colveccount>0
+                \\
+                \expandafter\colvecnext
+        \else
+                \end{pmatrix}
+        \fi
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+\newenvironment{homeworkProblem}[1][-1]{
+    \ifnum#1>0
+        \setcounter{homeworkProblemCounter}{#1}
+    \fi
+    \section{Problem \arabic{homeworkProblemCounter}}
+    \setcounter{partCounter}{1}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+%
+% Homework Details
+%   - Title
+%   - Due date
+%   - Class
+%   - Section/Time
+%   - Instructor
+%   - Author
+%
+
+\newcommand{\hmwkTitle}{Assignment 1}
+\newcommand{\hmwkDueDate}{September 28, 2018}
+\newcommand{\hmwkClass}{Probability \& Statistics}
+\newcommand{\hmwkClassTime}{Spring Semester}
+\newcommand{\hmwkClassInstructor}{Prof. Davide Eynard}
+\newcommand{\hmwkAuthorName}{\textbf{A. Romanelli} / \textbf{A. Vicini}}
+
+%
+% Title Page
+%
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+    \normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate\ at 8:30am}\\
+    \vspace{0.1in}\large{\textit{\hmwkClassInstructor}}
+    \vspace{3in}
+}
+
+\author{\hmwkAuthorName}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+
+\begin{homeworkProblem}
+	$$A = \{0,1,2,3,4,5,6,7\},\qquad B = \{1,4,6,7,10,14\}, \qquad C = \{3,5,7,9\},\qquad D = \{0,2,4,6,8\}$$
+	\begin{enumerate}[label=\textbf{\alph*)}]
+		\item $A \cap C \longrightarrow \quad \{3,5,7\}$
+		\item $A \cap (C \cup D) \longrightarrow \quad \{0,2,3,4,5,6,7\}$
+		\item $(B \cup C) \backslash D \longrightarrow \quad \{1,3,5,7,9,10,14\}$
+		\item $(A \backslash D) \cup C \longrightarrow \quad \{1,3,5,7,9\}$
+		\item $(A \cap B)^c \longrightarrow \quad \{0,2,3,5,8,9,10,14\}$
+		\item $(A \cup D)^c \longrightarrow \quad \{9,10,14\}$
+ 	\end{enumerate}
+\end{homeworkProblem}
+\begin{homeworkProblem}
+	\begin{enumerate}[label=\textbf{\alph*)}]
+		\item 
+		\begin{enumerate}[label=(\roman*)]
+			\item We can obtain $6^3 = 216$ possible different unique combinations by throwing the dice three times. Each time we throw the die we multiply by 6.
+			\item Half of those unique numbers will be even, whereas the other half will be odd, thus $\frac{6^3}2 = 108$
+			\item We would have $4^4 = 256$ different possible combinations, multiplying by 4 each time we throw the die.
+		\end{enumerate}
+		\item No, it wouldn't. We would have $26^{12} \approx 95 \text{ quadrillion}$ different combinations against $66^{10} \approx 1 \text{ quintillion}$, which is 100 times greater. We would need to have at least a password that's 19 digits in order to have 10 quintillion combinations.
+		\item To get four different cards from the different decks, we'd have a $60\%$ chance. We pick a card from the first deck and from the second deck we'd have a $\frac{12}{13}$ chance of picking a different one. We repeat the same for the third deck, but this time instead of being different from one card, it needs to be different from the two that we previously picked, hence we'll get a $\frac{11}{13}$ chance of picking a different card. Finally from the last deck we'd have a $\frac{10}{13}$ chance of getting another different card from the previous three. The events are related, as each chance depends on the previous draws: hence we multiply these chances to obtain: $\frac{12}{13} \times \frac{11}{13} \times \frac{10}{13} \approx 60\%$
+	\end{enumerate}	
+\end{homeworkProblem}
+\begin{homeworkProblem}
+	\begin{enumerate}[label=\textbf{\alph*)}]
+		\item 1d12, as there's a higher chance of getting the highest roll: 
+		$$\frac1{12} > \frac16 \times \frac16 > \frac14 \times \frac14 \times \frac14$$ $$8.3\% > 2.8\% > 1.5\%$$
+		\item 1d12:
+		$$\frac1{12} > \frac1{18} > \frac1{64}$$
+		$$8.3\% > 5.6\% > 1.5\%$$
+		\item 3d4 Because if getting very high (and very low) values gets more unlikely, the probability must be shifting somewhere else and this mean that the chances of the values in the middle being the most frequent sums are higher than with other dies. Of course at the extremes 1d12 is favoured, but has a better chance to get a minimum as well, so not really worth picking.
+	\end{enumerate}
+\end{homeworkProblem}
+\begin{homeworkProblem}
+	\begin{enumerate}[label=\textbf{\alph*)}]
+		
+	\item
+		\begin{enumerate}[label=\roman*.]
+			\item We can solve this problem by finding the opposite solution, thus the chance of other people not having the birthday the same same day as us and then computing the complement:
+			$$1 - \left(\frac{364}{365}\right)^{22} \approx 5.8\%$$
+			Each time a person is added, our chance is multiplied by $\frac{364}{365}$, because our birthday is always the same. With 22 other people in the class, we have a $\frac{364}{365}^22$ chances of \underline{NOT} sharing the birthday with any person. We take the complement of that and we have our odd.
+			\item Again, we compute the chance of any two people \underline{NOT} sharing their birthday to solve the problem by computing the complement.
+			$$\frac{365}{365}\times\frac{364}{365}\times\dots\times\frac{343}{365}\approx 49.2\%$$
+			Now we get the complement and we get: $$100\%-49.2\% =50.8\%$$
+			Which is the chance that any two people in the class share their birthday.
+		\end{enumerate}
+	\item $\left(\frac12 \times \frac12 \times \frac12\right) \cdot 2 = \frac28 = \frac14 = 25\%$ of not having a collision between the three ants. We compute this by elevating $\frac12$ to the power of vertices. If we let them be $n$ we get a chance of $\left(\frac12^{n-1}\right)$. This is because we must compute the chance of all the ants going in the same direction for each direction (thus multiplying by two at the end, making us elevating to the power of $n-1$ instead of $n$).
+	\end{enumerate}
+\end{homeworkProblem}
+\end{document}

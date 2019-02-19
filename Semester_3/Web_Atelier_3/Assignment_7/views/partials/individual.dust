@@ -1,0 +1,55 @@
+<div id={._id} class='favorite-container'>
+  <div class='header' style="text-align: center">
+    <div class="title">
+      <span contenteditable="true" meta-id={._id}>{title}</span>
+      <form action="/favorites/{._id}/bookmarked?_method=PUT" method="POST" enctype="application/x-www-form-urlencoded">
+        <input type="hidden" name="_id" value={._id}>
+        <input type="image" src=
+        {@eq key=bookmarked value="true" type="boolean"}
+          '/img/star.png'
+          alt="Add Bookmark"
+        {:else}
+          '/img/empty-star.png'
+          alt="Remove Bookmark"
+        {/eq}
+        >
+      </form>
+    </div>
+    <div class='id' style="font-size:0.75em">
+      <a href="/favorites/{_id}">{_id}</a>
+    </div>
+    <div class='date' style="font-size: 0.6em">
+      {dateCreated}
+    </div>
+  </div>
+  <img src={.dataUrl} style="display: block;">
+  <div style="text-align: center; margin-bottom: 10px">
+    By:&nbsp;
+    {@eq key=user value="anon" type="String"}
+      <a href="/favorites">Anonymous</a>
+    {:else}
+      <a href="/{user}/favorites">{user}</a>
+    {/eq}
+  </div>
+  <form class="imgurSubmit">
+    <input type="text" name="title" value="" placeholder="Album Title">
+    <input type="text" name="tags" value="" placeholder="Album Tags">
+    <input type="checkbox">
+    <button class='imgurPublish'>Publish</button>
+    <button class='imgurReplace'>Replace</button>
+  </form>
+  <div class="form-container">
+    {! {@eq key=loggedUser.username value=user type="String"} !}
+    <form action="/favorites/{._id}?_method=DELETE" method="POST" enctype="application/x-www-form-urlencoded">
+      <input type="hidden" name="_id" value={._id}>
+      <input type="submit" value="Delete">
+    </form>
+    {! {/eq}
+    {@eq key="anon" value=user type="String"}
+    <form action="/favorites/{._id}?_method=DELETE" method="POST" enctype="application/x-www-form-urlencoded">
+      <input type="hidden" name="_id" value={._id}>
+      <input type="submit" value="Delete">
+    </form>
+    {/eq} !}
+  </div>
+</div>

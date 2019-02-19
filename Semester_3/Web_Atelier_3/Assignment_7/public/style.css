@@ -1,0 +1,425 @@
+/* DO NOT MODIFY */
+
+* {
+  box-sizing: border-box;
+}
+
+*:focus {
+  outline: none;
+}
+
+html {
+  min-height: 100%;
+}
+
+body {
+  min-height: 100%;
+  margin: 0;
+  display             : grid;
+  color               : white;
+  background          : linear-gradient(30deg, #16222B, #253847);
+  font-family         : "Lucida Sans Unicode",
+                        "Lucida Grande",
+                        sans-serif;
+  grid-template-areas : "title"
+                        "canvas"
+                        "temps"
+                        "favorites";
+}
+
+a:link,
+a:visited {
+  display         : inline-block;
+  color           : #d66853;
+  text-decoration : none;
+  font-weight     : bold;
+  transition      : 0.2s ease-in-out;
+}
+
+a:hover {
+  color     : #ff521b;
+  transform : translateY(-2px);
+}
+
+body > header {
+  margin     : 2em 0;
+  padding    : 1em 0;
+  background : linear-gradient(215deg, #364156, #2B3B40);
+  border-bottom: 4px solid #ff521b;
+  border-top: 4px solid #ff521b;
+  text-align : center;
+  grid-area  : title;
+}
+
+
+
+body > header h1 {
+  margin         : 0;
+  color          : #ff521b;
+  text-transform : uppercase;
+  font-family    : "Montserrat";
+  font-size      : 3em;
+  font-weight    : bold;
+}
+
+body > header .username {
+  font-weight : bold;
+}
+
+body > #app {
+  display         : flex;
+  padding         : 1em 0;
+  background : linear-gradient(215deg, #364156, #2B3B40);
+  border-bottom: 2px solid #ff521b;
+  border-top: 2px solid #ff521b;
+  justify-content : center;
+  grid-area       : canvas;
+}
+
+body > #app canvas {
+  margin        : 0 1em;
+  border        : 5px groove #ff521b;
+  border-radius : 10px;
+  background    : white;
+}
+
+body > #app #left-toolbar {
+  display        : flex;
+  align-self     : center;
+  flex-direction : column;
+}
+
+body > #app #left-toolbar button,
+body > #app button {
+  border-radius : 5px;
+  background    : rgba(255,255,255,0.85);
+  transition    : 0.2s ease-in-out;
+}
+
+body > #app #left-toolbar button:hover,
+body > #app button:hover {
+  background : white;
+  box-shadow : 0 0 10px 0px #d66853;
+}
+
+body > #app #brush-toolbar {
+  display        : flex;
+  margin-left    : 1em;
+  align-self     : center;
+  flex-direction : column;
+}
+
+body > #app #brush-toolbar > * {
+  width  : 100%;
+  margin : 0.5em 0;
+}
+
+body > #favorites {
+  padding: 0 2em;
+}
+
+body > #favorites > h2 {
+  margin-bottom  : 0.5em;
+  color          : #ff521b;
+  text-align     : center;
+  text-transform : uppercase;
+  font-family    : "Montserrat";
+  font-size      : 2em;
+  letter-spacing : 2px;
+}
+
+body > #favorites > div {
+  display         : flex;
+  flex-wrap       : wrap;
+  justify-content : center;
+  grid-area       : favorites;
+}
+
+body > #favorites .favorite-container {
+  max-width: 350px;
+  display          : inline-block;
+  margin           : 0.5em;
+  padding-bottom   : 1em;
+  border           : 2px groove #d66853;
+  border-radius    : 5px;
+  background-color : #364156;
+  transition       : 0.2s ease-in-out;
+}
+
+#favorites .favorite-container:hover {
+  border-color : #ff521b;
+  box-shadow   : 0 0 10px 0px #d66853;
+}
+
+#favorites .favorite-container:hover > .header .title {
+  color : #ff521b;
+}
+
+.favorite-container > * {
+  padding : 0 1em;
+}
+
+.favorite-container > .header {
+  padding     : 0.5em 1em 1em;
+  background  : rgba(0,0,0,0.5);
+  font-family : "Montserrat";
+}
+
+body > #favorites .favorite-container > .header .title {
+  color      : #d66853;
+  font-size  : 2rem;
+  transition : 0.2s ease-in-out;
+}
+
+body > #favorites .favorite-container > .header .title > span {
+  padding: 0px 5px;
+  margin: 0px 5px;
+}
+
+body > #favorites .favorite-container > .header .title > span:focus {
+  outline: 3px solid rgba(255,82,27,0.15);
+
+}
+
+body > #favorites .favorite-container > .header .title > form {
+  display : inline-block;
+}
+
+body > #favorites .favorite-container form input[type="image"] {
+  width        : 20px;
+  margin       : 0;
+  padding-left : 5px;
+  transition   : 0.2s ease-in-out;
+}
+
+body > #favorites .favorite-container form input[type="image"]:hover {
+  transform : scale(1.25);
+}
+
+body > #favorites .favorite-container > img {
+  position: relative;
+  width: calc(100% - 2em);
+  padding: 0;
+  margin           : 0.5em 1em;
+  border-radius    : 5px;
+  background-color : white;
+}
+
+form#search,
+form#imgurSearch {
+  text-align: center;
+  margin: 0.5em auto;
+}
+
+.imgurSubmit {
+  display: block;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  margin-bottom: 1em;
+}
+
+.imgurSubmit > input:not([type='checkbox']) {
+  margin: 0.5em auto;
+  display: block;
+}
+
+#app {
+  display : flex;
+}
+
+#canvas {
+  border : 1px solid #bbb;
+}
+
+.toolbar {
+  width      : 56px;
+  text-align : center;
+}
+
+.toolbar button {
+  width         : 52px;
+  height        : 25px;
+  margin-bottom : 10px;
+  cursor        : pointer;
+}
+
+#brush-toolbar {
+  width : 84px;
+}
+
+#brush-toolbar button {
+  width  : 80px;
+  height : 40px;
+}
+
+#palette {
+  display          : flex;
+  width            : 53px;
+  height           : 204px;
+  background-color : buttonface;
+  flex-wrap        : wrap;
+  justify-content  : space-around;
+  cursor           : pointer;
+}
+
+.toolbar #camera-btn {
+  height        : 40px;
+  color         : #444;
+  border        : none;
+  border-radius : 3px;
+  background    : none;
+  outline       : none;
+  font-size     : 1.5em;
+  line-height   : 1.5em;
+}
+
+.toolbar #camera-btn:hover {
+  background : #70a0e8;
+}
+
+.toolbar #camera-btn:active {
+  background : #0e57c3;
+}
+
+.p-color {
+  width  : 25px;
+  height : 25px;
+}
+
+.black {
+  background-color : rgb(0, 0, 0);
+}
+
+.dark-gray {
+  background-color : rgb(87, 87, 87);
+}
+
+.red {
+  background-color : rgb(173, 35, 35);
+}
+
+.blue {
+  background-color : rgb(42, 75, 215);
+}
+
+.green {
+  background-color : rgb(29, 105, 20);
+}
+
+.brown {
+  background-color : rgb(129, 74, 25);
+}
+
+.purple {
+  background-color : rgb(129, 38, 192);
+}
+
+.light-gray {
+  background-color : rgb(160, 160, 160);
+}
+
+.light-green {
+  background-color : rgb(129, 197, 122);
+}
+
+.light-blue {
+  background-color : rgb(157, 175, 255);
+}
+
+.cyan {
+  background-color : rgb(41, 208, 208);
+}
+
+.orange {
+  background-color : rgb(255, 146, 51);
+}
+
+.yellow {
+  background-color : rgb(255, 238, 51);
+}
+
+.tan {
+  background-color : rgb(233, 222, 187);
+}
+
+.pink {
+  background-color : rgb(255, 205, 243);
+}
+
+.white {
+  background-color : rgb(255, 255, 255);
+}
+
+#clock {
+  position         : relative;
+  width            : 360px;
+  height           : 48px;
+  margin-top       : -10px;
+  margin-bottom    : 20px;
+  background-color : #ddd;
+  text-align       : center;
+  font-size        : 2.5rem;
+  font-weight      : bold;
+}
+
+#clock-time,
+#progress-bar {
+  position : absolute;
+  top      : 0;
+  left     : 0;
+  width    : 100%;
+  height   : 100%;
+}
+
+#clock-time {
+  z-index     : 10;
+  line-height : 48px;
+  /* same height as #clock so that the time is vertically centered */
+}
+
+#progress-bar {
+  width            : 0%;
+  height           : 48px;
+  color            : white;
+  background-color : #8DFF80;
+  text-align       : center;
+  line-height      : 30px;
+}
+
+#favorites {
+  margin: 0 0 50px;
+}
+
+#favorites img {
+  margin : 1em auto;
+}
+
+#favorites input {
+  border-color  : transparent;
+  border-radius : 5px;
+  transition    : 0.2s ease-in-out;
+}
+
+#favorites input[value="Update"] {
+  background : rgba(100,255,100,0.75);
+}
+
+#favorites input[value="Delete"] {
+  background : rgba(255,100,100,0.75);
+}
+
+#favorites input:not([type="text"]):not([type='image']):hover {
+  color      : #020122;
+  cursor:pointer;
+  background : #ff521b;
+}
+
+#favorites .form-container {
+  display         : flex;
+  justify-content : space-around;
+}
+
+#favorites .form-container form input {
+  margin-left : 5px;
+}

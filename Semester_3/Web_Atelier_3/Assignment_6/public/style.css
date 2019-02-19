@@ -1,0 +1,435 @@
+/* DO NOT MODIFY */
+
+body {
+  display             : grid;
+  color               : white;
+  background          : #020122;
+  font-family         : "Lucida Sans Unicode",
+                        "Lucida Grande",
+                        sans-serif;
+  grid-template-areas : "title"
+                        "canvas"
+                        "temps"
+                        "favorites";
+}
+
+a:link,
+a:visited {
+  display         : inline-block;
+  color           : #d66853;
+  text-decoration : none;
+  font-weight     : bold;
+  transition      : 0.2s ease-in-out;
+}
+
+a:hover {
+  color     : #ff521b;
+  transform : translateY(-2px);
+}
+
+body > header {
+  margin     : 2em 0;
+  padding    : 1em 0;
+  background : #364156;
+  text-align : center;
+  grid-area  : title;
+}
+
+body > div#temporary-saves {
+  display   : flex;
+  grid-area : temps;
+}
+
+#temporary-saves .temporary-fav {
+  display   : inline-block;
+  max-width: 25%;
+}
+
+#temporary-saves .temporary-fav img {
+  width: 100%;
+  background: white;
+}
+
+#temporary-saves .submit-form h3 {
+  color          : #ff521b;
+
+}
+
+#temporary-saves .submit-form fieldset {
+  border-color: transparent;
+}
+
+#temporary-saves > div > .submit-form input[type='submit'] {
+  display: block;
+  margin: 0 auto;
+  transition: 0.2s ease-in-out;
+  border: none;
+  padding: 0.5em;
+  border-radius: 5px;
+}
+
+#temporary-saves .submit-form input[type='submit']:hover {
+  background: #ff521b;
+
+}
+
+
+
+body > header h1 {
+  margin         : 0;
+  color          : #ff521b;
+  text-transform : uppercase;
+  font-family    : "Montserrat";
+  font-size      : 3em;
+  font-weight    : bold;
+}
+
+body > header .username {
+  font-weight : bold;
+}
+
+body > #app {
+  display         : flex;
+  padding         : 1em 0;
+  background      : #364156;
+  justify-content : center;
+  grid-area       : canvas;
+}
+
+body > #app canvas {
+  margin        : 0 1em;
+  border        : 5px groove #ff521b;
+  border-radius : 10px;
+  background    : white;
+}
+
+body > #app #left-toolbar {
+  display        : flex;
+  align-self     : center;
+  flex-direction : column;
+}
+
+body > #app #left-toolbar button,
+body > #app button {
+  border-radius : 5px;
+  background    : rgba(255,255,255,0.85);
+  transition    : 0.2s ease-in-out;
+}
+
+body > #app #left-toolbar button:hover,
+body > #app button:hover {
+  background : white;
+  box-shadow : 0 0 10px 0px #d66853;
+}
+
+body > #app #brush-toolbar {
+  display        : flex;
+  margin-left    : 1em;
+  align-self     : center;
+  flex-direction : column;
+}
+
+body > #app #brush-toolbar > * {
+  width  : 100%;
+  margin : 0.5em 0;
+}
+
+body > #favourites > h2 {
+  margin-bottom  : 0.5em;
+  color          : #ff521b;
+  text-align     : center;
+  text-transform : uppercase;
+  font-family    : "Montserrat";
+  font-size      : 2em;
+  letter-spacing : 2px;
+}
+
+body > #favourites > div {
+  display         : flex;
+  flex-wrap       : wrap;
+  justify-content : center;
+  grid-area       : favorites;
+}
+
+body > #favourites .favorite-container {
+  display          : inline-block;
+  margin           : 0.5em;
+  padding-bottom   : 1em;
+  border           : 2px groove #d66853;
+  border-radius    : 5px;
+  background-color : #364156;
+  transition       : 0.2s ease-in-out;
+}
+
+#favourites .favorite-container:hover {
+  border-color : #ff521b;
+  box-shadow   : 0 0 10px 0px #d66853;
+}
+
+#favourites .favorite-container:hover > .header .title {
+  color : #ff521b;
+}
+
+.favorite-container > * {
+  padding : 0 1em;
+}
+
+.favorite-container > .header {
+  padding     : 0.5em 1em 1em;
+  background  : rgba(0,0,0,0.5);
+  font-family : "Montserrat";
+}
+
+body > #favourites .favorite-container > .header .title {
+  color      : #d66853;
+  font-size  : 2rem;
+  transition : 0.2s ease-in-out;
+}
+
+body > #favourites .favorite-container > .header .title > form {
+  display : inline-block;
+}
+
+body > #favourites .favorite-container form input[type="image"] {
+  width        : 20px;
+  margin       : 0;
+  padding-left : 5px;
+  transition   : 0.2s ease-in-out;
+}
+
+body > #favourites .favorite-container form input[type="image"]:hover {
+  transform : scale(1.25);
+}
+
+body > #favourites .favorite-container > img {
+  margin           : 0.5em 1em;
+  border-radius    : 5px;
+  background-color : white;
+}
+
+#app {
+  display : flex;
+}
+
+#canvas {
+  border : 1px solid #bbb;
+}
+
+.toolbar {
+  width      : 56px;
+  text-align : center;
+}
+
+.toolbar button {
+  width         : 52px;
+  height        : 25px;
+  margin-bottom : 10px;
+  cursor        : pointer;
+}
+
+#brush-toolbar {
+  width : 84px;
+}
+
+#brush-toolbar button {
+  width  : 80px;
+  height : 40px;
+}
+
+#palette {
+  display          : flex;
+  width            : 53px;
+  height           : 204px;
+  background-color : buttonface;
+  flex-wrap        : wrap;
+  justify-content  : space-around;
+  cursor           : pointer;
+}
+
+.toolbar #camera-btn {
+  height        : 40px;
+  color         : #444;
+  border        : none;
+  border-radius : 3px;
+  background    : none;
+  outline       : none;
+  font-size     : 1.5em;
+  line-height   : 1.5em;
+}
+
+.toolbar #camera-btn:hover {
+  background : #70a0e8;
+}
+
+.toolbar #camera-btn:active {
+  background : #0e57c3;
+}
+
+.p-color {
+  width  : 25px;
+  height : 25px;
+}
+
+.black {
+  background-color : rgb(0, 0, 0);
+}
+
+.dark-gray {
+  background-color : rgb(87, 87, 87);
+}
+
+.red {
+  background-color : rgb(173, 35, 35);
+}
+
+.blue {
+  background-color : rgb(42, 75, 215);
+}
+
+.green {
+  background-color : rgb(29, 105, 20);
+}
+
+.brown {
+  background-color : rgb(129, 74, 25);
+}
+
+.purple {
+  background-color : rgb(129, 38, 192);
+}
+
+.light-gray {
+  background-color : rgb(160, 160, 160);
+}
+
+.light-green {
+  background-color : rgb(129, 197, 122);
+}
+
+.light-blue {
+  background-color : rgb(157, 175, 255);
+}
+
+.cyan {
+  background-color : rgb(41, 208, 208);
+}
+
+.orange {
+  background-color : rgb(255, 146, 51);
+}
+
+.yellow {
+  background-color : rgb(255, 238, 51);
+}
+
+.tan {
+  background-color : rgb(233, 222, 187);
+}
+
+.pink {
+  background-color : rgb(255, 205, 243);
+}
+
+.white {
+  background-color : rgb(255, 255, 255);
+}
+
+#clock {
+  position         : relative;
+  width            : 360px;
+  height           : 48px;
+  margin-top       : -10px;
+  margin-bottom    : 20px;
+  background-color : #ddd;
+  text-align       : center;
+  font-size        : 2.5rem;
+  font-weight      : bold;
+}
+
+#clock-time,
+#progress-bar {
+  position : absolute;
+  top      : 0;
+  left     : 0;
+  width    : 100%;
+  height   : 100%;
+}
+
+#clock-time {
+  z-index     : 10;
+  line-height : 48px;
+  /* same height as #clock so that the time is vertically centered */
+}
+
+#progress-bar {
+  width            : 0%;
+  height           : 48px;
+  color            : white;
+  background-color : #8DFF80;
+  text-align       : center;
+  line-height      : 30px;
+}
+
+#favourites img {
+  margin : 1em auto;
+}
+
+#favourites div.gallery {
+  width  : 200px;
+  float  : left;
+  margin : 5px;
+}
+
+#favourites div.gallery img {
+  width       : 90%;
+  height      : 100px;
+  margin-left : 10px;
+  box-shadow  : 1px 1px 3px 1px rgba(0, 0, 0, 0.42);
+}
+
+#favourites div.desc {
+  padding    : 15px;
+  text-align : center;
+}
+
+#favourites input {
+  border-color  : transparent;
+  border-radius : 5px;
+  transition    : 0.2s ease-in-out;
+}
+
+#favourites input[value="Update"] {
+  background : rgba(100,255,100,0.75);
+}
+
+#favourites input[value="Delete"] {
+  background : rgba(255,100,100,0.75);
+}
+
+#favourites input:not([type="text"]):not([type='image']):hover {
+  color      : #020122;
+  cursor:pointer;
+  background : #ff521b;
+}
+
+#favourites .form-container {
+  display         : flex;
+  justify-content : space-around;
+}
+
+#favourites .form-container form input {
+  margin-left : 5px;
+}
+
+#favourites .submit-form {
+  max-width : 300px;
+}
+
+#favourites .submit-form img {
+  width      : 100%;
+  max-height : 200px;
+}
+
+.favorite-container {
+  background : red;
+}

@@ -1,0 +1,128 @@
+.form-group {
+  display: flex;
+  position : relative;
+  border   : none;
+  align-items: center;
+}
+
+.submit {
+  text-align: center;
+}
+
+.form-group > * {
+  box-sizing   : border-box;
+  width        : 100%;
+  margin-right : 0;
+  margin-left  : 0;
+  display : inline-block;
+}
+
+.form-group label {
+  margin-bottom : 2px;
+  text-align    : left;
+  transition: 0.2s ease-in-out;
+  order: 0;
+}
+
+.form-group input,
+.form-group textarea {
+  order: 1;
+}
+
+.form-group input:hover + label,
+.form-group textarea:hover + label {
+  color: white;
+}
+
+.form-group input:focus {
+  outline-color: rgb(29,185,84);
+  border-style: solid;
+  border-color: rgba(29,185,84,0.5);
+}
+
+.form-group input:focus + label,
+.form-group textarea:focus + label {
+  color: rgb(29,185,84);
+}
+
+.form-group > label::after {
+  content : ':';
+}
+
+.form-group input[type="range"] {
+  border        : 2px solid #ddd;
+  border-radius : 5px;
+  background    : #ddd;
+}
+
+.form-group:not(:last-of-type) {
+  border-bottom : 1px solid rgba(50,50,50);
+}
+
+.form-group > textarea {
+  font-family : inherit;
+  font-size   : 10pt;
+  resize      : none;
+}
+
+.submit button[type="submit"] {
+  padding        : 0.5em 2em;
+  border-radius  : 10px;
+  text-transform : uppercase;
+  font-size      : 0.75em;
+  border: 2px solid transparent;
+  transition: 0.2s ease-in-out;
+}
+
+.submit button[type="submit"]:hover {
+  position: relative;
+  box-sizing: content-box;
+  top: -2px;
+  border-color: #1db954;
+  background-color: #189845;
+  color: white;
+  cursor: pointer;
+}
+
+.form-group input[type="checkbox"] {
+  width : 15px;
+}
+
+::-webkit-input-placeholder {
+  font-family : "Lato";
+  font-size   : 10pt;
+}
+
+:-moz-placeholder {
+  font-family : "Lato";
+  font-size   : 10pt;
+}
+
+::-moz-placeholder {
+  font-family : "Lato";
+  font-size   : 10pt;
+}
+
+:-ms-input-placeholder {
+  font-family : "Lato";
+  font-size   : 10pt;
+}
+
+@media
+  (min-width : 768px) {
+  .form-group > label {
+    width : calc(40% - 5px);
+    text-align: right;
+    margin-right: 5px;
+  }
+
+  .form-group > input,
+  .form-group > textarea {
+    width : 60%;
+  }
+
+  .submit {
+    width: 60%;
+    float: right;
+  }
+}

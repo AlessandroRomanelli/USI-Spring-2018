@@ -1,0 +1,87 @@
+<div id="favourites">
+  <h2>
+    {@gt key=storage.length value=0}
+      {storage.length}&nbsp;
+      {@eq key=storage.length value=1}
+        Favourite
+      {:else}
+        Favourites
+      {/eq}
+    {:else}
+      No Favourites
+    {/gt}
+  </h2>
+  <div>
+    {#storage}
+    <div class='favorite-container'>
+      <div class='header' style="text-align: center">
+        <div class="title">
+          {title}
+          <form action="/favorites/{._id}/bookmarked" method="POST" enctype="application/x-www-form-urlencoded">
+            <input type="hidden" name="_method" value="PUT">
+            <input type="hidden" name="_id" value={._id}>
+            <input type="image" src=
+            {@eq key=bookmarked value="true" type="boolean"}
+              '/img/star.png'
+              alt="Add Bookmark"
+            {:else}
+              '/img/empty-star.png'
+              alt="Remove Bookmark"
+            {/eq}
+            >
+          </form>
+        </div>
+        <div class='id' style="font-size:0.75em">
+          <a href="/favorites/{_id}">{_id}</a>
+        </div>
+        <div class='date' style="font-size: 0.6em">
+          {dateCreated}
+        </div>
+      </div>
+      <img width="300" height="200" src={.dataUrl} style="display: block;">
+      <div style="text-align: center; margin-bottom: 10px">
+        By:&nbsp;
+        {@eq key=user value="anon" type="String"}
+          <a href="/favorites">Anonymous</a>
+        {:else}
+          <a href="/{user}/favorites">{user}</a>
+        {/eq}
+      </div>
+
+      <div class="form-container">
+        {@eq key=loggedUser.username value=user type="String"}
+        <form action="/favorites/{._id}" method="POST" enctype="application/x-www-form-urlencoded">
+          <input type="hidden" name="_method" value="PUT">
+          <input type="hidden" name="_id" value={._id}>
+          <label for="title">Name: </label>
+          <input type="text" name="title" value="">
+          <input type="hidden" name="dataUrl" value={.dataUrl}>
+          <input type="submit" value="Update">
+        </form>
+        <form action="/favorites/{._id}" method="POST" enctype="application/x-www-form-urlencoded">
+          <input type="hidden" name="_method" value="DELETE">
+          <input type="hidden" name="_id" value={._id}>
+          <input type="submit" value="Delete">
+        </form>
+        {/eq}
+        {@eq key="anon" value=user type="String"}
+        <form  action="/favorites/{._id}" method="POST" enctype="application/x-www-form-urlencoded">
+          <input type="hidden" name="_method" value="PUT">
+          <input type="hidden" name="_id" value={._id}>
+          <label for="title">Name: </label>
+          <input type="text" name="title" value="">
+          <input type="hidden" name="dataUrl" value={.dataUrl}>
+          <input type="submit" value="Update">
+        </form>
+        <form style="float: right" action="/favorites/{._id}" method="POST" enctype="application/x-www-form-urlencoded">
+          <input type="hidden" name="_method" value="DELETE">
+          <input type="hidden" name="_id" value={._id}>
+          <input type="submit" value="Delete">
+        </form>
+        {/eq}
+      </div>
+    </div>
+    {/storage}
+  </div>
+    <!-- Favourites will go here (programmatically). Each favourite should be an <img> element -->
+</div>

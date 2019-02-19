@@ -1,0 +1,40 @@
+{
+  "name": "wa-exercise-7-2017-2018",
+  "version": "0.0.0",
+  "description": "Exercise 7 of Web Atelier. Express.js and Mongoose",
+  "main": "app.js",
+  "scripts": {
+    "start": "DEBUG='canvas-server' ./bin/www",
+    "test": "npm run test-mocha",
+    "test-mocha": "./node_modules/mocha/bin/mocha -R spec ./test/routes ./test/hypermedia"
+  },
+  "keywords": [
+    "Node.js",
+    "Express.js",
+    "MongoDB",
+    "Mongoose",
+    "REST"
+  ],
+  "author": "Vincenzo Ferme, Andrea Gallidabino, Vasileios Triglianos, Ilya Yanok",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "debug": "^3.1.0",
+    "dustjs-helpers": "^1.7.4",
+    "dustjs-linkedin": "^2.7.5",
+    "express": "^4.16.2",
+    "express-formidable": "^1.0.0",
+    "klei-dust": "^1.0.0",
+    "method-override": "^3.0.0",
+    "morgan": "^1.9.0",
+    "request": "^2.88.0",
+    "supertest": "^3.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.7.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "mocha": "^4.0.1",
+    "should": "^13.1.3"
+  }
+}

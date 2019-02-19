@@ -1,0 +1,52 @@
+<!-- DON'T MODIFY THIS FILE -->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Canvas Application - Web Atelier 2018</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Merriweather|Montserrat" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body onload="init()">
+  <header>
+    <h1>
+      Canavaggio
+    </h1>
+    <div style="text-align: center">
+      {?loggedUser}
+       Logged in as: <span class='username'>{loggedUser.username}</span>. <a href="/auth/logout">Logout?</a>
+       {:else}
+       Not logged in. <a href="/auth">Login?</a>
+      {/loggedUser}
+    </div>
+  </header>
+
+
+    <div id="app">
+        <div id="left-toolbar" class="toolbar">
+            <button id="clear-btn">Clear</button>
+            <button id="undo-btn">Undo</button>
+            <button id="camera-btn"><i class="fa fa-camera" aria-hidden="true"></i></button>
+        </div>
+        <canvas id="canvas" width="600" height="400"></canvas>
+        <div id="brush-toolbar" class="toolbar">
+            <!-- Brushes buttons go here (programmatically). Each button should be a <button> element -->
+        </div>
+    </div>
+    {> "./partials/updateFavorite.dust" /}
+    <script src="/dustjs/dust-core.min.js" charset="utf-8"></script>
+    <script src="/dustjs-helpers/dust-helpers.min.js" charset="utf-8"></script>
+    <script src="/js/fetch.js" charset="utf-8"></script>
+    <script src="/js/views.js" charset="utf-8"></script>
+    <script src="/scripts/brushes.js"></script>
+    <script src="/scripts/undo.js"></script>
+    <!-- <script src="scripts/clock.js"></script> -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/scripts/app.js"></script>
+    <script src="/main.js"></script>
+</body>
+
+</html>

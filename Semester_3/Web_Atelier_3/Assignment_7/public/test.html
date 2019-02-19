@@ -1,0 +1,374 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0">
+    <title>Test - CanvasApp with Fetch</title>
+    <link rel="stylesheet" href="qunit/qunit.css">
+  </head>
+  <body>
+    <script src="js/fetch.js"></script>
+    <script src="qunit/qunit.js"></script>
+    <script src="qunit/sinon-4.1.2.js"></script>
+    <script src="qunit/sinon-test.js"></script>
+    <script src="qunit/sinon-qunit.js"></script>
+    <div id="qunit"></div>
+    <div id="qunit-fixture"></div>
+    <script>
+
+     /* sinon.config.useFakeTimers = false;*/
+
+     var headers = {};
+     var baseUrl = "/tests";
+     var emptyCallback = function(response){};
+     var validJSON = {
+       "name" : "bob"
+     };
+
+     var notValidJSON = emptyCallback;
+
+     /*
+      * The function must check that:
+      *  - all the arguments are passed when called
+      *  - type has one of the following value: "GET", "POST", "PUT", "DELETE"
+      *  - the data (data parameter) are in JSON format
+      * If a check fails the function must throw an error.
+      */
+
+     QUnit.module("Task 1: doFetchRequest Function", {});
+
+     test("Check the correctness of the parameter", function() {
+       assert.throws( doFetchRequest.bind(null), "should only accept 4 parameters, not less");
+       assert.throws( doFetchRequest.bind(null, "GET", baseUrl), "should only accept 4 parameters, not less");
+       assert.throws( doFetchRequest.bind(null, "GET", baseUrl, headers, null, emptyCallback, null), "should only accept 4 parameters, not more");
+
+       var result;
+
+       try {
+         doFetchRequest("GET", baseUrl, headers, null);
+         result = true;
+       } catch(error) {
+         result = false;
+       }
+
+       ok(result, "should accept 4 parameters");
+
+       try {
+         doFetchRequest("GET", baseUrl, headers, null);
+         result = true;
+       } catch(error) {
+         result = false;
+       }
+
+       ok( result, "should accept the http method GET");
+
+       try {
+         doFetchRequest("POST", baseUrl, headers, null);
+         result = true;
+       } catch(error) {
+         result = false;
+       }
+
+       ok( result, "should accept the http method POST");
+
+       try {
+         doFetchRequest("PUT", baseUrl, headers, null);
+         result = true;
+       } catch(error) {
+         result = false;
+       }
+
+       ok( result, "should accept the http method PUT");
+
+       try {
+         doFetchRequest("DELETE", baseUrl + "/58133bf8a6754d184494c8d3", headers, null);
+         result = true;
+       } catch(error) {
+         result = false;
+       }
+
+       ok( result, "should accept the http method DELETE");
+
+       assert.throws( doFetchRequest.bind(null, "HEAD", baseUrl, headers, null, emptyCallback), "should NOT accept the http method HEAD");
+
+       try {
+         doFetchRequest("GET", baseUrl, headers, null);
+         result = true;
+       } catch(error) {
+         result = false;
+       }
+
+       ok( result, "should accept null data");
+
+       try {
+         doFetchRequest("GET", baseUrl, headers, undefined);
+         result = true;
+       } catch(error) {
+         result = false;
+       }
+
+       ok( result, "should accept undefined data");
+
+       try {
+         doFetchRequest("POST", baseUrl, headers, 'someString');
+         result = true;
+       } catch(error) {
+         result = false;
+       }
+
+
+       ok( result, "should accept string data");
+
+       try {
+         doFetchRequest("POST", baseUrl, headers, {});
+         result = false;
+       } catch(error) {
+         result = true;
+       }
+
+
+       ok( result, "should NOT accept Object data");
+     });
+
+     /*
+      * The function must open a connection to the server according to the type and url parameters, has to correctly set the Request Headers
+      * according to the headers parameter, additionally to the ones needed by the JSON interaction according to the type parameter, and has to
+      * correctly set the data to be sent according to the data parameter.
+      */
+     QUnit.module("Task 1: doFetchRequest Function - response", {})
+
+      asyncTest("Check that responses containt the correct data", function(assert) {
+       // let done = assert.async()
+   setTimeout(function() {
+     doFetchRequest("GET", baseUrl, {
+       "Accept": 'text/html'
+     }, undefined)
+       .then(res => {
+         QUnit.start();
+         assert.equal(res.status, 200, "GET should return the right status code");
+         return res.text()
+       })
+       .then(text => {
+         QUnit.start();
+         assert.equal(text, "GET Working", "GET should return the right response");
+       })
+    }, 500)
+
+    setTimeout(function() {
+      doFetchRequest("GET", baseUrl, {
+        "Accept": 'application/json'
+      }, undefined)
+        .then(res => {
+          QUnit.start();
+          assert.equal(res.status, 200, "GET should return the right status code");
+          return res.json()
+        })
+        .then(json => {
+          QUnit.start();
+          assert.equal(json.text, "GET Working", "GET should return the right response");
+        })
+     }, 500)
+
+     setTimeout(function() {
+       doFetchRequest("DELETE", baseUrl, {
+         "Accept": 'text/html'
+       }, undefined)
+         .then(res => {
+           QUnit.start();
+           assert.equal(res.status, 201, "DELETE should return the right status code");
+           return res.text()
+         })
+         .then(text => {
+           QUnit.start();
+           assert.equal(text, "DELETE Working", "DELETE should return the right response");
+         })
+      }, 500)
+
+      setTimeout(function() {
+        doFetchRequest("GET", baseUrl + '/redirect', {
+          "Accept": 'text/html'
+        }, undefined)
+          .then(res => {
+            QUnit.start();
+            assert.equal(res.redirected, true, "Should redirect properly");
+            return res.text()
+          })
+          .then(text => {
+            QUnit.start();
+            assert.equal(text, 'Redirect Works', "Redirect returns the right response");
+          })
+       }, 500)
+
+     setTimeout(function() {
+       doFetchRequest("POST", baseUrl + '/json', {
+         "Content-Type": 'text/plain',
+         "Accept": 'application/json'
+       }, '')
+         .then(res => {
+           QUnit.start();
+           assert.equal(res.redirected, false, "Should not redirect");
+           assert.equal(res.status, 200, "Should receive the right code");
+           return res.json()
+         })
+         .then(json => {
+           QUnit.start();
+           assert.equal(json.body.test, 'test', "Should contain the proper JSON response");
+         })
+      }, 500)
+
+      setTimeout(function() {
+        doFetchRequest("PUT", baseUrl + '/echo', {
+          "Content-Type": 'application/json',
+          "Accept": 'application/json'
+        }, JSON.stringify({test: 'testBody'}))
+          .then(res => {
+            QUnit.start();
+            return res.json()
+          })
+          .then(json => {
+            QUnit.start();
+            assert.equal(json.body.test, 'testBody', "Should contain the proper JSON response");
+          })
+       }, 500)
+
+       setTimeout(function() {
+         doFetchRequest("PUT", baseUrl + '/echo', {
+           "Content-Type": 'application/json',
+           "Accept": 'text/html'
+         }, JSON.stringify({test: 'testBody'}))
+           .then(res => {
+             return res.json()
+           })
+           .then(text => {
+             QUnit.start();
+             assert.equal(text, 'testBody', "Should contain the proper String response");
+           })
+        }, 500)
+     })
+
+     QUnit.module("Task 2: doJSONRequest Function", {});
+
+     test("Check the correctness of the parameter", function() {
+       assert.throws( doJSONRequest.bind(null), "should only accept 4 parameters, not less");
+       assert.throws( doJSONRequest.bind(null, "GET", baseUrl), "should only accept 4 parameters, not less");
+       assert.throws( doJSONRequest.bind(null, "GET", baseUrl, headers, null, emptyCallback, null), "should only accept 4 parameters, not more");
+
+       var result;
+
+       try {
+         doJSONRequest("GET", baseUrl, headers, null);
+         result = true;
+       } catch(error) {
+         result = false;
+       }
+
+       ok(result, "should accept 4 parameters");
+
+       try {
+         doJSONRequest("GET", baseUrl, headers, null);
+         result = true;
+       } catch(error) {
+         result = false;
+       }
+
+       ok( result, "should accept the http method GET");
+
+       try {
+         doJSONRequest("POST", baseUrl, headers, null);
+         result = true;
+       } catch(error) {
+         result = false;
+       }
+
+       ok( result, "should accept the http method POST");
+
+       try {
+         doJSONRequest("PUT", baseUrl, headers, null);
+         result = true;
+       } catch(error) {
+         result = false;
+       }
+
+       ok( result, "should accept the http method PUT");
+
+       try {
+         doJSONRequest("DELETE", baseUrl + "/58133bf8a6754d184494c8d3", headers, null);
+         result = true;
+       } catch(error) {
+         result = false;
+       }
+
+       ok( result, "should accept the http method DELETE");
+
+       assert.throws( doJSONRequest.bind(null, "HEAD", baseUrl, headers, null, emptyCallback), "should NOT accept the http method HEAD");
+
+       try {
+         doJSONRequest("GET", baseUrl, headers, null);
+         result = true;
+       } catch(error) {
+         result = false;
+       }
+
+       ok(result, "should accept null data");
+
+       try {
+         doJSONRequest("GET", baseUrl, headers, undefined);
+         result = true;
+       } catch(error) {
+         result = false;
+       }
+
+       ok( result, "should accept undefined data");
+
+       try {
+         doJSONRequest("POST", baseUrl, headers, 'someString');
+         result = true;
+       } catch(error) {
+         result = false;
+       }
+
+       ok( result, "should accept string data");
+
+       try {
+         doJSONRequest("POST", baseUrl, headers, {});
+         result = true;
+       } catch(error) {
+         result = false;
+       }
+
+       ok( result, "should accept Object data");
+
+       try {
+         doJSONRequest("POST", baseUrl, {'Accept': 'text/html'}, {});
+         result = false;
+       } catch(error) {
+         result = true;
+       }
+
+       ok( result, "should throw error with wrong headers");
+
+       try {
+         doJSONRequest("POST", baseUrl, {'Content-Type': 'text/html'}, {});
+         result = false;
+       } catch(error) {
+         result = true;
+       }
+
+       ok( result, "should throw error with wrong headers");
+     })
+
+    QUnit.module("Task 2: doJSONRequest Function - response", {})
+
+    asyncTest("Check that responses containt the correct data", function(assert) {
+      setTimeout(function() {
+        doJSONRequest("PUT", baseUrl + '/echo', {}, {test: 'testBody'})
+          .then(json => {
+            QUnit.start();
+            assert.equal(json.body.test, 'testBody', "Should contain the proper JSON response");
+          })
+      }, 500)
+    })
+
+    </script>
+  </body>
+</html>

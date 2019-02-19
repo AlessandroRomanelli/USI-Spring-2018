@@ -1,0 +1,489 @@
+html {
+  height : 100%;
+}
+
+body {
+  display            : grid;
+  min-height         : 100%;
+  margin             : 0;
+  padding            : 0;
+  color              : #ccc;
+  background-color   : #191414;
+  font-family        : "Lato";
+  grid-template-rows : 1fr auto;
+}
+
+.embedded {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%;
+}
+
+iframe {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 10px;
+}
+
+body div.content {
+  display             : grid;
+  grid-template-areas : "header"
+                        "navigation"
+                        "content"
+                        "sidebar";
+}
+
+body::-webkit-scrollbar {
+    width: 4px;
+}
+
+body::-webkit-scrollbar-track {
+  background-color: #191414;
+}
+
+body::-webkit-scrollbar-thumb {
+  border-radius: 2px;
+  background-color: rgba(29,185,84,1);
+}
+
+a:link,
+a:visited {
+  position        : relative;
+  color           : #ddd;
+  text-decoration : none;
+  transition      : 0.2s ease-in-out;
+}
+
+main a:link,
+main a:visited,
+aside a:link,
+aside a:visited {
+  color : #8eb897;
+}
+
+main a::before,
+aside a::before {
+  content    : '';
+  position   : absolute;
+  bottom     : -1px;
+  width      : 0;
+  height     : 1px;
+  background : transparent;
+  transition : 0.2s ease-in-out;
+}
+
+main a:hover,
+aside a:hover {
+  color: #1db954;
+}
+
+main a:hover::before,
+.contacts > div:last-child a:hover::before {
+  width      : 100%;
+  background : #1db954;
+}
+
+header {
+  display          : flex;
+  position         : relative;
+  height           : 350px;
+  border-bottom    : 2px solid #1db954;
+  background-color : #292424;
+  justify-content  : center;
+  grid-area        : header;
+}
+
+header::before {
+  content             : '';
+  position            : absolute;
+  top                 : 0;
+  left                : 0;
+  width               : 100%;
+  height              : 100%;
+  opacity             : 0.15;
+  background          : url('../img/header.jpg');
+  background-position : bottom;
+  background-size     : cover;
+  pointer-events      : none;
+}
+
+header h1 {
+  margin           : 1em;
+  padding          : 0 0.5em;
+  color            : #eee;
+  border-top       : 5px solid rgba(29,185,84,0.3);
+  border-bottom    : 5px solid rgba(29,185,84,0.3);
+  border-radius    : 5%;
+  background-color : #292424;
+  text-align       : center;
+  align-self       : center;
+  font-family      : "Oswald";
+  font-size        : 3em;
+  transition       : 0.75s ease-out all;
+}
+
+header h1:hover {
+  color        : white;
+  border-color : rgba(29,185,84,1);
+  box-shadow   : 0 10px 20px -10px rgba(195,232,189,0.3),
+                 0 -10px 20px -10px rgba(195,232,189,0.3);
+  text-shadow  : 0 0 10px rgba(195,232,189,0.5);
+}
+
+nav {
+  box-sizing: border-box;
+  padding   : 1em 2em;
+  grid-area : navigation;
+}
+
+nav > div {
+  position : sticky;
+  top      : 25%;
+  width    : 100%;
+}
+
+aside h2,
+nav h2 {
+  position   : relative;
+  color      : #eee;
+  text-align : center;
+}
+
+aside h2::after,
+aside h2::before,
+nav h2::after,
+nav h2::before {
+  content    : '';
+  position   : absolute;
+  top        : 50%;
+  width      : 20%;
+  height     : 2px;
+  background : rgba(29,185,84,1);
+}
+
+aside h2::before,
+nav h2::before {
+  left : 0;
+}
+
+aside h2::after,
+nav h2::after {
+  right : 0;
+}
+
+nav ul {
+  display         : flex;
+  padding-left    : 0;
+  justify-content : space-around;
+  list-style      : none;
+}
+
+nav ul > li {
+  height     : 50px;
+  transition : 0.2s ease-in-out;
+  width: 100%;
+}
+
+nav ul > li > a {
+  display     : flex;
+  height      : 100%;
+  align-items : center;
+  margin-left: 1em;
+}
+
+nav ul > li.active > a:hover {
+  cursor : default;
+}
+
+nav ul > li:not(.active):hover {
+  border-radius    : 5px;
+  background-color : rgba(100,155,100,0.1);
+}
+
+nav ul > li.active > a,
+nav ul > li:hover > a {
+  transform : translateX(1em);
+}
+
+nav ul > li > a {
+  position   : relative;
+  transition : 0.2s ease-in-out;
+}
+
+nav ul > li > a::before {
+  content          : '';
+  position         : absolute;
+  top              : 50%;
+  left             : 0;
+  width            : 0;
+  height           : 2px;
+  opacity          : 0.66;
+  background-color : rgba(29,185,84,1);
+  transition       : 0.2s ease-in-out;
+}
+
+nav ul > li.active > a,
+nav ul > li > a:hover {
+  color       : #fff;
+  text-shadow : 0 0 5px rgba(255,255,255,0.25);
+}
+
+nav ul > li.active > a::before,
+nav ul > li > a:hover::before {
+  left  : -20px;
+  width : 15px;
+}
+
+nav ul > li.active > a::before {
+  opacity : 1;
+}
+
+main {
+  padding   : 1em;
+  grid-area : content;
+}
+
+main h1 {
+  color : #eee;
+}
+
+main audio {
+  width: 100%;
+  border-radius: 10px;
+}
+
+main b {
+  color: #1db954;
+}
+
+main p {
+  text-align: justify;
+}
+
+main p img {
+  border-radius: 5px;
+  width: 100%;
+}
+
+aside {
+  padding   : 1em 2em;
+  color     : #eee;
+  grid-area : sidebar;
+  text-align: center;
+}
+
+footer {
+  display         : flex;
+  height          : 100px;
+  align-items     : center;
+  justify-content : center;
+}
+
+aside > div {
+  position : sticky;
+  top      : 25%;
+}
+
+.contacts > div:first-of-type {
+  display         : flex;
+  justify-content : center;
+  flex-wrap: wrap;
+}
+
+.contacts img {
+  max-width  : 300px;
+  height     : 50px;
+  opacity    : 0.66;
+  transition : 0.2s ease-in-out;
+}
+
+.contacts > div:first-of-type > a:first-child > img {
+  border-radius: 50% 0 0 50%;
+}
+
+.contacts > div:first-of-type > a:last-child > img {
+  border-radius: 0 50% 50% 0;
+}
+
+.contacts img:hover {
+  z-index   : 1000;
+  opacity   : 1;
+  transform : scale(1.1);
+}
+
+article {
+  padding    : 1em;
+  transition : 0.2s ease-in-out;
+  opacity: 1;
+}
+
+article p {
+  margin-top : 0;
+  color      : #ddd;
+  text-align : justify;
+  transition: 0.2s ease-in-out all;
+}
+
+article h2 {
+  color : #fff;
+  transition: 0.2s ease-in-out all;
+}
+
+article hr {
+  padding : 0;
+}
+
+article img {
+  width         : 100%;
+  height        : auto;
+  margin        : 1em 0;
+  border-radius : 5px;
+}
+
+article:hover p {
+  color: #fff;
+}
+
+article:hover h2 {
+  color: #1db954;
+}
+
+article p::first-letter {
+  margin-right : 2px;
+  padding      : 0 5px 0 5px;
+  border       : 2px solid rgba(29,185,84,1);
+  font-size    : 1.75em;
+}
+
+article h2 {
+  display : inline-block;
+  margin  : 0;
+}
+
+article small.date {
+  float  : right;
+  margin : 1em 0 1em 1em;
+}
+
+article address.author {
+  text-align : right;
+}
+
+main .introduction h1 {
+  margin-bottom: 5px;
+}
+
+main .introduction q {
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  font-size: 0.8em;
+  text-align: center;
+  display: block;
+}
+
+main .introduction h4 {
+  text-transform: uppercase;
+  margin-bottom: 0;
+  letter-spacing: 5px;
+  color: #eee;
+}
+
+main .introduction span h4,
+main .introduction span p {
+  transition: 0.2s ease-in-out all;
+}
+
+main .introduction span:hover h4 {
+  color: #1db954;
+}
+
+main .introduction span:hover p {
+  color: #eee;
+}
+
+@media
+  screen and (min-width : 768px) {
+  body div.content {
+    grid-template-columns : 1fr 2fr 1fr;
+    grid-template-areas   : "header header header"
+                            "navigation content sidebar";
+  }
+
+  article {
+    opacity : 0.7;
+  }
+
+  article .post {
+    margin-top : 1em;
+  }
+
+  article img {
+    width        : 50%;
+    max-width    : 240px;
+    max-height   : 240px;
+    float        : left;
+    margin       : 0;
+    margin-right : 1em;
+  }
+
+  header h1 {
+    font-size : 4.5em;
+  }
+
+  nav ul {
+    display : block;
+  }
+
+  nav ul > li {
+    padding : 0.5em 0 0.5em 2em;
+  }
+
+  nav ul > li > a {
+    width : calc(100% - 1em);
+  }
+
+  nav, aside {
+    box-sizing: border-box;
+    min-width: 250px;
+    max-width: 350px;
+  }
+
+  main .introduction img {
+    float: right;
+    width: 50%;
+    max-width: 250px;
+    border-radius: 10px 25% 25% 10px;
+    margin: 1em 0 1em 1em;
+  }
+
+  main .introduction span:nth-of-type(2n+3) h4 {
+    text-align: right;
+  }
+
+}
+
+::-webkit-input-placeholder {
+  font-family : "Lato";
+  font-size   : 10pt;
+}
+
+:-moz-placeholder {
+  font-family : "Lato";
+  font-size   : 10pt;
+}
+
+::-moz-placeholder {
+  font-family : "Lato";
+  font-size   : 10pt;
+}
+
+:-ms-input-placeholder {
+  font-family : "Lato";
+  font-size   : 10pt;
+}
