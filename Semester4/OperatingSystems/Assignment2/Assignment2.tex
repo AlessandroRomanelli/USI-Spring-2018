@@ -1,0 +1,209 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{amssymb}
+\usepackage{todonotes}
+\usepackage{mathtools}
+\usepackage{wasysym}
+\usepackage{cancel}
+\usepackage{phaistos}
+\usepackage{listings}
+\usepackage[usestackEOL]{stackengine}[2013-10-15]
+\def\x{\hspace{6ex}}    %BETWEEN TWO 1-DIGIT NUMBERS
+\def\y{\hspace{4.9ex}}  %BETWEEN 1 AND 2 DIGIT NUMBERS
+\def\z{\hspace{3.8ex}}    %BETWEEN TWO 2-DIGIT NUMBERS
+\stackMath
+
+\usetikzlibrary{automata,positioning}
+
+%
+% Basic Document Settings
+%
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName}
+\chead{\hspace{2.5cm} \hmwkClass\ (\hmwkClassInstructor): \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Question \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Question \arabic{#1} (continued)}{Question \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Question \arabic{#1}}{Question \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Question \arabic{#1}}{}\nobreak{}
+}
+
+\newcount\colveccount
+\newcommand*\colvec[1]{
+        \global\colveccount#1
+        \begin{pmatrix}
+        \colvecnext
+}
+\def\colvecnext#1{
+        #1
+        \global\advance\colveccount-1
+        \ifnum\colveccount>0
+                \\
+                \expandafter\colvecnext
+        \else
+                \end{pmatrix}
+        \fi
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Question \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+\newenvironment{homeworkProblem}[1][-1]{
+    \ifnum#1>0
+        \setcounter{homeworkProblemCounter}{#1}
+    \fi
+    \section{Question \arabic{homeworkProblemCounter}}
+    \setcounter{partCounter}{1}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+%
+% Homework Details
+%   - Title
+%   - Due date
+%   - Class
+%   - Section/Time
+%   - Instructor
+%   - Author
+%
+
+\newcommand{\hmwkTitle}{Assignment 2}
+\newcommand{\hmwkDueDate}{7 March, 2019}
+\newcommand{\hmwkClass}{Operating Systems}
+\newcommand{\hmwkClassTime}{Fall Semester}
+\newcommand{\hmwkClassInstructor}{Prof. Fernando Pedone}
+\newcommand{\hmwkAuthorName}{Alessandro Romanelli}
+
+%
+% Title Page
+%
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+    \normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate\ at 8:30am}\\
+    \vspace{0.1in}\large{\textit{\hmwkClassInstructor}}
+    \vspace{3in}
+}
+
+\author{\hmwkAuthorName}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+
+\begin{homeworkProblem}
+System calls are used when a user program attempts to run a privileged system subroutine, because some of these routines are hazardous, only the kernel has the right to invoke them: a system call is thus a request to the OS to run a system routine on the user program's behalf.
+\end{homeworkProblem}
+\begin{homeworkProblem}
+We can identify five classes of services that each OS provides in its on way:
+\begin{enumerate}
+	\item File-system manipulation: allows the creation, allocation and deletion of files in the main memory. A user-level program can not be trusted to perform such actions as this could be exploited to manipulate files that a user shouldn't have access to.
+	\item I/O operations: reading and writing on I/O devices on a low level. I/O are guarded and  operations on them are typically restricted; a user shouldn't be able to control it directly but the OS should handle that on the program's behalf.
+	\item Program execution: the system loads a program into memory and runs it. A user-program should not be allowed to allocate CPU run time.
+	\item Communication: the OS allows processes to exchange data by composing and broadcasting packets, which are processed and sent across the network and later reassembled by the destination operating system. A user-level application can not coordinate access to the network device and it might receive packets which were meant for other processes.
+	\item Error detection: the OS analyses the received data to check for possible corruptions (bit flips or data loss) to make sure that the received data has not been corrupted. A user program is not able to do this because it would need kernel privileges to handle independently all the possible errors (including halting the system).
+\end{enumerate}
+\end{homeworkProblem}
+\begin{homeworkProblem}
+There are three possible ways of passing the necessary parameters to the OS:
+\begin{enumerate}
+	\item They can be passed by using the registers;
+	\item They can be pushed on the stack by the program and later popped off by the OS;
+	\item They can be stored in memory and pass the OS a pointer to that specific memory address via register. (Especially when there are more parameters to be passed than registers available)
+\end{enumerate}
+\end{homeworkProblem}
+\begin{homeworkProblem}
+There are two main ways of interprocess communication and they are the \textbf{message-passing model} and the \textbf{shared-memory model}.
+\\\\
+\textbf{Message-passing model}: two processes exchange messages either directly or indirectly through a common mailbox. A lot of setup is required in order to open the connection between the two processes since they may run on two different machines. The implementation of such a system assumes a vast amount of information to be known, but ideally it boils down to have a unique identifier to allow the two process to know where to send their messages to. This process requires considerable time and resources, thus resulting in a slower communication between the processes. It is however easier to implement and there are no conflicts to be avoided for smaller. bits of data.
+\\\\
+\textbf{Shared-memory model}: two processes can exchange messages by accessing a memory region which is going to be accessible by both of them. Normally the OS would try to prevent this, but if both processes agree about the share of the memory region, then the OS will allow them to do proceed. Once both processes have access to the shared region, they will be able to exchange messages by writing and reading from it, although there will be no guarantee that they don't overwrite each other's messages. This model is the best in terms of maximum speed and convenience of communication: when two processes run on the same system, the speed of the communication is determined solely by the time it takes to read and write to memory. The biggest problem of this model as I've said above is that it requires a greater deal of synchronisation between the processes to avoid RAW and WAR conflicts (Read After Write, Write After Read). 
+\end{homeworkProblem}
+\begin{homeworkProblem}
+The \textit{microkernel approach} means to strip the kernel of all the superfluous components, with minimal process and memory management. This makes extending the operating system much easier than with a regular kernel. The removed services have to be implemented at a user program level, therefore the OS can be ported easily from one system to another one having a completely different hardware.
+\\\\
+User programs and system services interact indirectly by using the \textbf{message-passing model} described in un \textbf{Question 4}, by exchanging messages through the microkernel. \\ \\
+There are two main disadvantages to using the microkernel approach: in the first place that system calls can require quite a lot of changes and secondly that the performance may decrease due to the heavy use of the interprocess communication system.
+\end{homeworkProblem}
+\end{document}

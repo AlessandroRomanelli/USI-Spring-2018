@@ -1,0 +1,46 @@
+@import variables
+
+@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans:600|Lato:300')
+
+@import animations
+
+body
+  font: 1em "Lato", Futura, sans-serif
+  background: $background
+  color: $text
+  margin: 0
+  min-width: 100vw
+  min-height: 100vh
+
+.app
+  display: grid
+  min-height: 100vh
+  grid-template-rows: 1fr auto
+  grid-template-areas: "content" "footer"
+  @media screen and (min-width: 600px)
+    grid-template-areas: ". content ." ". footer ."
+    grid-template-columns: 1fr 600px 1fr
+
+  .container
+    grid-area: content
+
+  .greeting
+    font: 3em "IBM Plex Sans", Futura, sans-serif
+    background: $dark
+    color: $background
+    padding: 0 $normal
+
+  .footer
+    border-top: 1px solid $dark
+    display: flex
+    align-items: center
+    justify-content: center
+    height: 50px
+    grid-area: footer
+
+.app .container
+  grid-area: content
+
+@import header
+
+@import profile

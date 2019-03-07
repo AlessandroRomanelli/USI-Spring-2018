@@ -1,0 +1,77 @@
+.profile
+  margin: $large 0
+
+.avatar img
+    max-width: 100%
+    display: block
+    margin: 0 auto
+
+.user-info
+  background: $dark
+  color: $invert-text
+  text-align: center
+  padding: $small $normal
+  h1
+    margin: 0
+    font-size: 3rem
+  i
+    margin-right: $small
+    color: $invert-text
+  span
+    font-size: 1.25rem
+    text-transform: uppercase
+    letter-spacing: 3px
+    color: transparentize($invert-text, 0.66)
+    font-weight: lighter
+  span.age
+    display: block
+  & > div
+    display: flex
+    justify-content: space-evenly
+
+.bio, .followers, .following
+  font-size: 1.25rem
+  span.heading
+    display: flex
+    align-items: center
+    text-transform: uppercase
+    font-weight: bolder
+    border-bottom: 1px solid $dark
+    border-top: 1px solid $dark
+    padding: $tiny 0
+
+.bio p
+  margin-top: 0.25rem
+
+.followers, .following
+  .container
+    display: flex
+    justify-content: flex-start
+  .follower
+    position: relative
+    max-width: 150px
+    max-height: 150px
+    img
+      width: 100%
+      height: 100%
+      transition: 0.5s ease-in-out
+      opacity: 0.75
+      filter: grayscale(0.75)
+      &:hover
+        cursor: pointer
+        opacity: 1
+        filter: grayscale(0)
+    div
+      position: absolute
+      bottom: 0
+      left: 0
+      color: $invert-text
+      text-shadow: 0 0 5px $dark
+      font-size: $normal
+      padding: $tiny
+
+.following
+  .container
+    justify-content: flex-end
+  span.heading
+    justify-content: flex-end
